@@ -1,0 +1,18 @@
+.card {
+    display: flex;
+    align-items: center; /* Alinha verticalmente os itens no centro */
+    width: 100%; /* Faz o card ocupar toda a largura da tela */
+    position: relative; /* Para que os filhos sejam posicionados em relação a ele */
+}
+
+.app-name {
+    flex: 1; /* Faz o nome do app ocupar o espaço restante */
+    margin-left: 10px; /* Espaçamento entre o botão e o nome do app */
+    font-size: 1.5em; /* Tamanho da fonte */
+    text-align: left; /* Centraliza o texto */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Sombra no texto */
+    background-color: #ffffff; /* Fundo para destaque */
+    padding: 10px 10px 10px 30px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra ao redor do span */
+    border-radius: 4px; /* Bordas arredondadas */
+}
