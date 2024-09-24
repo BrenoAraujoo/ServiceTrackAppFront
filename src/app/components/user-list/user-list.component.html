@@ -1,0 +1,8 @@
+<h2>Lista de Usuários</h2>
+<ul>
+  <li *ngFor="let user of users">
+    {{ user.name }} - {{ user.email }}
+    <p-button (click) = "viewUser(user.id)">Detalhes</p-button>
+    <a href="http://localhost:4200/users/{{user.id}}">Link {{user.id}}</a>
+  </li>
+</ul>
