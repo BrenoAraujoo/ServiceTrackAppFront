@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { CommonModule } from '@angular/common';
-import { User } from '../models/user.model';
+import { User } from '../models/user/user.model';
 import { ApiResponse } from '../models/api-response.model';
 
 @Component({

@@ -1,38 +1,27 @@
-/*
-
-.user-list-container{
-    padding: 10px 40px 5px 60px;
+.user-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 3.3rem;
+    /* Adiciona um preenchimento ao redor */
 }
-.user-list-container-header{
+
+.user-list-container-header {
     display: flex;
     justify-content: space-between;
-}
-.user-list-container-header-button{
-    padding: 10px;
+    /* Mantém o título e o botão separados */
+    align-items: center;
+    margin-bottom: 1rem;
+    /* Espaçamento abaixo do cabeçalho */
+
 }
 
-      */
+.card {
+    overflow-x: auto;
+    /* Permite rolagem horizontal se necessário */
+}
 
-      .user-list-container {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        padding: 3.3rem; /* Adiciona um preenchimento ao redor */
-      }
-      
-      .user-list-container-header {
-        display: flex;
-        justify-content: space-between; /* Mantém o título e o botão separados */
-        align-items: center;
-        margin-bottom: 1rem; /* Espaçamento abaixo do cabeçalho */
-        
-      }
-      
-      .card {
-        overflow-x: auto; /* Permite rolagem horizontal se necessário */
-      }
-      
-      p-table {
-        width: 100%; /* Garante que a tabela ocupe toda a largura do contêiner */
-      }
-      
+p-table {
+    width: 100%;
+    /* Garante que a tabela ocupe toda a largura do contêiner */
+}

@@ -3,7 +3,7 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { User } from '../models/user.model';
+import { User } from '../models/user/user.model';
 import { ApiResponse } from '../models/api-response.model';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TableModule } from 'primeng/table';
