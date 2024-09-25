@@ -8,11 +8,12 @@ import { ApiResponse } from '../models/api-response.model';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';
+import { TagModule } from 'primeng/tag';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
-  imports:[CommonModule,ButtonModule, TableModule, InputIconModule, IconFieldModule], 
+  imports:[CommonModule,ButtonModule, TableModule, InputIconModule, IconFieldModule,TagModule], 
   standalone: true,
 })
 export class UserListComponent implements OnInit {
@@ -42,4 +43,11 @@ export class UserListComponent implements OnInit {
     this.router.navigate(['/users/create'])
   }
 
+  getUserStatus(user: User): string {
+    return user.active ? 'ativo' : 'inativo';
+  }
+
+  userStatusColor(active: boolean){
+    return active? 'success':'danger';
+  }
 }
