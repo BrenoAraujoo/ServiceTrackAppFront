@@ -1,21 +1,26 @@
 <div class="user-list-container">
-  <h3>Gerenciar usuários</h3>
+  <div class="user-list-container-header">
+    <h3>Gerenciar usuários</h3>
+    <div class="user-list-container-header-button">
+      <button pButton pRipple label="Adicionar usuário" class="p-button-success" size="small" (click)="teste()"></button>
+    </div>
+  </div>
+
   <div class="card">
     <p-table #dt2 [value]="users" [paginator]="true" [rows]="5"
-      [tableStyle]="{ 'min-width': '20rem', 'max-width': '120rem' }" sortMode="multiple"
-      [rowsPerPageOptions]="[5, 10, 20]">
+      [tableStyle]="{ 'min-width': '20rem', 'max-width': '120rem' }" sortMode="multiple">
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="name" style="width:25%">Nome<p-sortIcon field="name" /></th>
           <th pSortableColumn="email" style="width:25%">Email<p-sortIcon field="email" /></th>
           <th pSortableColumn="jobPosition" style="width:25%">Cargo<p-sortIcon field="jobPosition" /></th>
-          <th pSortableColumn="smartPhoneNumber" style="width:25%">Celular<p-sortIcon field="smartPhoneNumber" /></th>
+          <th pSortableColumn="smartPhoneNumber" style="width:10%">Celular<p-sortIcon field="smartPhoneNumber" /></th>
           <th pSortableColumn="active" style="width:25%">Ativo<p-sortIcon field="active" /></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-users>
         <tr>
-          <td><a href="http://localhost:4200/users/{{users.id}}">{{ users.name }}</a></td>
+          <td><a href="http://localhost:4200/users/{{users.id}}" (click)="viewUser(users.id)">{{ users.name }}</a></td>
           <td>{{ users.email }}</td>
           <td>{{ users.jobPosition }}</td>
           <td>{{ users.smartPhoneNumber }}</td>

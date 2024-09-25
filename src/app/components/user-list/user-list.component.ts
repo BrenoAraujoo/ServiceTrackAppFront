@@ -25,7 +25,7 @@ export class UserListComponent implements OnInit {
     this.userService.getUsers().subscribe((response:ApiResponse<User>) => {
       
       if(response.isSuccess){
-        this.users = response.data;
+        this.users =  Array.isArray(response.data) ? response.data : [response.data];
       }else{
         console.log('erro-> ' + response.error)
       }
@@ -35,5 +35,13 @@ export class UserListComponent implements OnInit {
 
   viewUser(userId: string): void {
     this.router.navigate([`/users/${userId}`]);  // Redireciona para a rota com o ID do usuário
+  }
+
+  createUser(): void{
+    this.router.navigate(['users/create'])
+  }
+
+  teste(): void{
+    console.log('add user')
   }
 }

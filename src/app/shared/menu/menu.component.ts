@@ -20,37 +20,54 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
       this.items = [
           {
-              label: 'Usuários',
+              label: 'Cadastros',
               items: [
                   {
-                      label: 'New',
-                      icon: 'pi pi-plus',
+                      label: 'Usuários',
+                      icon: 'pi pi-user-plus',
                       command: () => this.router.navigate(['/users']).then(()=>{
                         this.sideBarSerivce.closeSidebar();
                       })
                   },
                   {
-                      label: 'Search',
-                      icon: 'pi pi-search',
+                      label: 'Tarefas',
+                      icon: 'pi pi-wrench',
                       command: () => this.router.navigate(['users/1']).then(()=> {
                         this.sideBarSerivce.closeSidebar(); 
                       })
-                  }
+                  },
+                  {
+                    label: 'Tipos de Tarefas',
+                    icon: 'pi pi-wrench',
+                    command: () => this.router.navigate(['users/1']).then(()=> {
+                      this.sideBarSerivce.closeSidebar(); 
+                    })
+                }
               ]
           },
           {
-              label: 'Profile',
+            label: 'Relatórios',
+            items:[
+                {
+                    label: 'Tarefas',
+                    icon: 'pi-receipt'
+                }
+            ]
+          },
+          {
+              label: 'Configurações',
               items: [
                   {
-                      label: 'Settings',
+                      label: 'Configurações',
                       icon: 'pi pi-cog'
                   },
                   {
-                      label: 'Logout',
+                      label: 'Sair',
                       icon: 'pi pi-sign-out'
                   }
               ]
           }
+          
       ];
   }
 }
