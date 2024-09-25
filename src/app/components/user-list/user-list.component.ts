@@ -37,11 +37,9 @@ export class UserListComponent implements OnInit {
     this.router.navigate([`/users/${userId}`]);  // Redireciona para a rota com o ID do usuário
   }
 
+  
   createUser(): void{
-    this.router.navigate(['users/create'])
+    this.router.navigate(['/users/create'])
   }
 
-  teste(): void{
-    console.log('add user')
-  }
 }
