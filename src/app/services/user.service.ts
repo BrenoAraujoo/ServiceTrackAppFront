@@ -1,5 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { ApiResponse } from '../components/models/api-response.model';
+import { User } from '../components/models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,14 +15,15 @@ export class UserService {
     { id: 3, name: 'User Three', email: 'userthree@example.com' },
   ];
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<any[]> {
-    return of(this.users);  // Retorna os usuários como um Observable
-  }
 
   getUserById(id: number): Observable<any> {
     const user = this.users.find(user => user.id === id);
     return of(user);  // Retorna o usuário específico
+  }
+
+  getUsers() : Observable<ApiResponse<User>>{
+    return this.http.get<ApiResponse<User>>('https://localhost:7278/v1/users');
   }
 }
