@@ -1,1 +1,43 @@
-<p>user-create works!</p>
+<div class="user-create-container">
+    <div class="user-create-container-header">
+        <h3>Novo usuário</h3>
+        <div class="user-create-container-header-button">
+            <button pButton pRipple label="Adicionar usuário" size="small" (click)="createUser(user)"></button>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div class="container-20">
+            <div class="container-10">
+
+                <div class="image-container">
+                    <p-image class ="round-image" src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" alt="Image"
+                        width="250" />
+                </div>
+
+                <div class="flex flex-column">
+                    <label for="name">Nome</label>
+                    <input class="input-custom" id="name" [(ngModel)]="user.name" pInputText type="text" />
+                </div>
+                <div class="flex flex-column">
+                    <label for="email">Email</label>
+                    <input class="input-custom" id="email" [(ngModel)]="user.email" pInputText type="text" />
+                </div>
+                <div class="flex flex-column">
+                    <label for="jobPosition">Cargo</label>
+                    <input class="input-custom" id="jobPosition" [(ngModel)]="user.jobPosition" pInputText type="text" />
+                </div>
+                <div class="flex flex-column">
+                    <label for="smartPhoneNumber">Celular</label>
+                    <input class="input-custom" id="smartPhoneNumber" [(ngModel)]="user.smartPhoneNumber" pInputText type="text" />
+                </div>
+            </div>
+        </div>
+
+        <div class="container-80">80</div>
+
+    </div>
+
+
+</div>

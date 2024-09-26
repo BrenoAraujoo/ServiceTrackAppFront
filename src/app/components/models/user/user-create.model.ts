@@ -1,11 +1,8 @@
-export interface  User{
-
-    id: string; 
+export interface UserCreateModel{
+    
     name: string;
     email: string; 
     smartPhoneNumber: string;
     jobPosition: string | null; 
-    active: boolean;
-
 
 }
