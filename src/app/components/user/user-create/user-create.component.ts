@@ -1,21 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user-services/user.service';
 import { Router } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { UserCreateModel } from '../../models/user/user-create.model';
-import { ApiResponse } from '../../models/api-response.model';
-import { User } from '../../models/user/user.model';
-import { ButtonModule } from 'primeng/button';
-import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PasswordModule } from 'primeng/password';
 
-import { IconFieldModule } from 'primeng/iconfield';
-import { InputIconModule } from 'primeng/inputicon';
+import {FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
 
-import { FormsModule } from '@angular/forms';
-import { InputTextModule } from 'primeng/inputtext';
-import { TabViewModule } from 'primeng/tabview';
-import { ImageModule } from 'primeng/image';
 import { UserTabDetailsComponent } from '../user-tab-details/user-tab-details.component';
 import { UserTabConfigComponent } from '../user-tab-config/user-tab-config.component';
 import { UserFormService } from '../../../services/user-services/user-form.service';
@@ -23,7 +14,7 @@ import { UserFormService } from '../../../services/user-services/user-form.servi
 @Component({
   selector: 'app-user-create',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule, InputIconModule, IconFieldModule, ButtonModule, ImageModule, ReactiveFormsModule, PasswordModule, TabViewModule],
+  imports: [SharedModuleModule],
   templateUrl: './user-create.component.html',
   styleUrl: './user-create.component.scss'
 })
@@ -33,23 +24,23 @@ export class UserCreateComponent implements OnInit {
   userDetailForm!: FormGroup;
 
   tabs = [
-    { title: 'Detalhes', content: UserTabDetailsComponent},
-    { title: 'Configurações', content: UserTabConfigComponent}
+    { title: 'Detalhes', content: UserTabDetailsComponent },
+    { title: 'Configurações', content: UserTabConfigComponent }
   ];
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private userService: UserService,
-    private userFormService: UserFormService, 
-    private router: Router) {}
+    private userFormService: UserFormService,
+    private router: Router) { }
   ngOnInit(): void {
-    
+
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       jobPosition: [''],
       smartPhoneNumber: [''],
-      password:['']
+      password: ['']
     })
 
     this.userFormService.setUserForm(this.userForm);

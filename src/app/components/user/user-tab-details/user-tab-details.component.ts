@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { UserFormService } from '../../../services/user-services/user-form.service';
+import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
+import { FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -8,7 +9,7 @@ import { UserFormService } from '../../../services/user-services/user-form.servi
   templateUrl: './user-tab-details.component.html',
   styleUrls: ['./user-tab-details.component.scss'],
   standalone: true,
-  imports: [ReactiveFormsModule]
+  imports: [SharedModuleModule]
 })
 export class UserTabDetailsComponent implements OnInit {
 
