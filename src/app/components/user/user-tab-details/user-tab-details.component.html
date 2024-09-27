@@ -1,18 +1,20 @@
 <form [formGroup]="userForm">
   <div class="flex-container-password">
 
+    <div class="password-input-group">
+      <label class="input-text" for="password">Senha</label>
+      <input class="input-custom" id="password" formControlName="password" pPassword type="password"
+        [feedback]="false" />
+    </div>
+    <div class="password-input-group">
+      <label class="input-text" for="passwordConfirm">Confirmar senha</label>
+      <input class="input-custom" id="passwordConfirm" formControlName="password" pPassword type="text"
+        [feedback]="false" />
+    </div>
 
     <div class="password-input-group">
-      <label class="input-text" for="password">Senha</label>
-      <input class="input-custom" id="password" formControlName="password" pInputText type="text" />
-    </div>
-    <div class="password-input-group">
-      <label class="input-text" for="password">Senha</label>
-      <input class="input-custom" id="password" formControlName="password" pInputText type="text" />
-    </div>
-    <div class="password-input-group">
-      <label class="input-text" for="password">Senha</label>
-      <input class="input-custom" id="password" formControlName="password" pInputText type="text" />
+      <label class="input-text" for="tipoUsuario">Tipo de usuário</label>
+      <input class="input-custom" id="tipoUsuario" formControlName="password" pInputText type="text" />
     </div>
   </div>
 </form>

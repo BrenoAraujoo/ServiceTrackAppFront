@@ -48,7 +48,6 @@ export class UserCreateComponent implements OnInit {
 
   }
 
-
   createUser(): void {
     if (this.userForm.valid) {
 
@@ -56,7 +55,7 @@ export class UserCreateComponent implements OnInit {
       this.userService.createUser(userCreateModel).subscribe({
         next: (response) => {
           if (response.isSuccess)
-            console.log('usuario criado com sucesso!' + response.data)
+            console.log('usuario criado com sucesso!')
 
         },
         error: (err) => {
@@ -66,6 +65,7 @@ export class UserCreateComponent implements OnInit {
             const errorResponse = err.error; // ou err.message, err.json(), etc.
             // Caso a estrutura do erro seja diferente
             console.log('Código:', errorResponse.error.code || 'Código não disponível');
+            console.log('Status code:', err.status || 'Status code nao disponivel');
             console.log('Mensagem:', errorResponse.error.message || 'Mensagem não disponível');
             console.log('Detalhes:', errorResponse.error.erros || 'Detalhes não disponíveis');
           } else {
@@ -73,7 +73,6 @@ export class UserCreateComponent implements OnInit {
           }
         }
       });
-
     }
     else {
       console.log('Formulario invalido!!!')
