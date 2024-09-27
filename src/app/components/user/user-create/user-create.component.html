@@ -1,0 +1,57 @@
+<div class="user-create-container">
+
+    <form [formGroup]="userForm" (keydown.enter)="$event.preventDefault()">
+        <div class="user-create-container-header">
+            <h3>Novo usuário</h3>
+            <div class="user-create-container-header-button">
+                <button pButton pRipple label="Adicionar usuário" size="small" (click)="createUser()"></button>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <div class="container-20">
+                <div class="container-10">
+
+                    <div class="image-container">
+                        <p-image class="round-image"
+                            src="https://primefaces.org/cdn/primeng/images/galleria/galleria10.jpg" alt="Image"
+                            width="250" />
+                    </div>
+
+                    <div class="flex flex-column">
+                        <label for="name">Nome</label>
+                        <input class="input-custom" id="name" formControlName="name" pInputText type="text" />
+                    </div>
+                    <div class="flex flex-column">
+                        <label for="email">Email</label>
+                        <input class="input-custom" id="email" formControlName="email" pInputText type="text" />
+                    </div>
+                    <div class="flex flex-column">
+                        <label for="jobPosition">Cargo</label>
+                        <input class="input-custom" id="jobPosition" formControlName="jobPosition" pInputText
+                            type="text" />
+                    </div>
+                    <div class="flex flex-column">
+                        <label for="smartPhoneNumber">Celular</label>
+                        <input class="input-custom" id="smartPhoneNumber" formControlName="smartPhoneNumber" pInputText
+                            type="text" />
+                    </div>
+                </div>
+            </div>
+            <div class="container-80">
+
+                <div class="card">
+                    <p-tabView>
+                        <p-tabPanel *ngFor="let tab of tabs" [header]="tab.title">
+                            <ng-container *ngIf="tab.content">
+                                <ng-container *ngComponentOutlet="tab.content"></ng-container>
+                            </ng-container>
+                        </p-tabPanel>
+                    </p-tabView>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>

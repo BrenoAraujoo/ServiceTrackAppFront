@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UserService } from '../../services/user-services/user.service';
+import { UserService } from '../../../services/user-services/user.service';
 import { CommonModule } from '@angular/common';
-import { User } from '../models/user/user.model';
-import { ApiResponse } from '../models/api-response.model';
+import { User } from '../../models/user/user.model';
+import { ApiResponse } from '../../models/api-response.model';
 
 @Component({
   selector: 'app-user-detail',

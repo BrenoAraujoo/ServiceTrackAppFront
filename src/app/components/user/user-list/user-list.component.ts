@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../services/user-services/user.service';
+import { UserService } from '../../../services/user-services/user.service';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
-import { User } from '../models/user/user.model';
-import { ApiResponse } from '../models/api-response.model';
+import { User } from '../../models/user/user.model';
+import { ApiResponse } from '../../models/api-response.model';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TableModule } from 'primeng/table';
 import { InputIconModule } from 'primeng/inputicon';
