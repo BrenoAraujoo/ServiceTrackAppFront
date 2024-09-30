@@ -1,6 +1,5 @@
 <form [formGroup]="userForm">
   <div class="flex-container-user-tab">
-
     <div class="input-group">
       <label class="input-text" for="name">Nome</label>
       <input class="input-custom" id="name" formControlName="name" pInputText type="text" />
@@ -17,6 +16,7 @@
       <label class="input-text" for="smartPhoneNumber">Celular</label>
       <input class="input-custom" id="smartPhoneNumber" formControlName="smartPhoneNumber" pInputText type="text" />
     </div>
+
     <div class="input-group">
       <label class="input-text" for="password">Senha</label>
       <input class="input-custom" id="password" formControlName="password" pPassword type="password"
@@ -27,14 +27,11 @@
       <input class="input-custom" id="passwordConfirm" formControlName="passwordConfirm" pPassword type="text"
         [feedback]="false" />
     </div>
-
     <div class="input-group">
-      <label class="input-text" for="dropdown">Tipo de usuário</label>
-      <p-dropdown 
-          id="dropdown"
-          class="p-dropdown w-full"> <!-- w full define d-->
+      <label class="input-text" for="user-type-dropdown">Tipo de usuário</label>
+      <p-dropdown id="user-type-dropdown" [style]="{'width':'100%','height':'50%','align-items': 'center'}"
+        [options]="userTypes">
       </p-dropdown>
     </div>
-
   </div>
 </form>

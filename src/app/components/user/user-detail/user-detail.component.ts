@@ -4,11 +4,12 @@ import { UserService } from '../../../services/user-services/user.service';
 import { CommonModule } from '@angular/common';
 import { User } from '../../models/user/user.model';
 import { ApiResponse } from '../../models/api-response.model';
+import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
 
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [CommonModule],
+  imports: [SharedModuleModule],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
 })
