@@ -1,20 +1,40 @@
 <form [formGroup]="userForm">
-  <div class="flex-container-password">
+  <div class="flex-container-user-tab">
 
-    <div class="password-input-group">
+    <div class="input-group">
+      <label class="input-text" for="name">Nome</label>
+      <input class="input-custom" id="name" formControlName="name" pInputText type="text" />
+    </div>
+    <div class="input-group">
+      <label class="input-text" for="email">Email</label>
+      <input class="input-custom" id="email" formControlName="email" pInputText type="text" />
+    </div>
+    <div class="input-group">
+      <label class="input-text" for="jobPosition">Cargo</label>
+      <input class="input-custom" id="jobPosition" formControlName="jobPosition" pInputText type="text" />
+    </div>
+    <div class="input-group">
+      <label class="input-text" for="smartPhoneNumber">Celular</label>
+      <input class="input-custom" id="smartPhoneNumber" formControlName="smartPhoneNumber" pInputText type="text" />
+    </div>
+    <div class="input-group">
       <label class="input-text" for="password">Senha</label>
       <input class="input-custom" id="password" formControlName="password" pPassword type="password"
         [feedback]="false" />
     </div>
-    <div class="password-input-group">
+    <div class="input-group">
       <label class="input-text" for="passwordConfirm">Confirmar senha</label>
-      <input class="input-custom" id="passwordConfirm" formControlName="password" pPassword type="text"
+      <input class="input-custom" id="passwordConfirm" formControlName="passwordConfirm" pPassword type="text"
         [feedback]="false" />
     </div>
 
-    <div class="password-input-group">
-      <label class="input-text" for="tipoUsuario">Tipo de usuário</label>
-      <input class="input-custom" id="tipoUsuario" formControlName="password" pInputText type="text" />
+    <div class="input-group">
+      <label class="input-text" for="dropdown">Tipo de usuário</label>
+      <p-dropdown 
+          id="dropdown"
+          class="p-dropdown w-full"> <!-- w full define d-->
+      </p-dropdown>
     </div>
+
   </div>
 </form>

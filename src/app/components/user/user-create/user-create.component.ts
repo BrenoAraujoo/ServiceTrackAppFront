@@ -35,12 +35,15 @@ export class UserCreateComponent implements OnInit {
     private router: Router) { }
   ngOnInit(): void {
 
+
+    
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       jobPosition: [''],
       smartPhoneNumber: [''],
-      password: ['']
+      password: [''],
+      passwordConfirm: ['']
     })
 
     this.userFormService.setUserForm(this.userForm);
@@ -49,9 +52,16 @@ export class UserCreateComponent implements OnInit {
   }
 
   createUser(): void {
+
+    const password = this.userForm.get('password')?.value;
+    const passwordConfirm = this.userForm.get('passwordConfirm')?.value;
+
+    console.log(password + ' - ' + passwordConfirm)
+  
     if (this.userForm.valid) {
 
       const userCreateModel: UserCreateModel = this.userForm.value;
+
       this.userService.createUser(userCreateModel).subscribe({
         next: (response) => {
           if (response.isSuccess)

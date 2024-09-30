@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModuleComponent } from './shared-module.component';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputIconModule } from 'primeng/inputicon';
@@ -12,6 +11,7 @@ import { TableModule } from 'primeng/table';
 import {ReactiveFormsModule} from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   exports: [
@@ -26,7 +26,8 @@ import { TagModule } from 'primeng/tag';
     TableModule,
     ReactiveFormsModule,
     IconFieldModule,
-    TagModule
+    TagModule,
+    DropdownModule
   ]
 })
 export class SharedModuleModule { }
