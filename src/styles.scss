@@ -6,7 +6,7 @@
 @import "primeflex/primeflex.css";
 
 .input-custom{
-    height: 10px;
+    height: 30px;
     width: 100%;
 }
 .title {
@@ -25,6 +25,7 @@
     flex: 1 1 calc(33% - 10px); /* 3 itens por linha */
     box-sizing: border-box; /* Para incluir padding e border no cálculo */
     max-width: 33%;
+    margin-bottom: 10px;
   }
   
   /* Ajustar o tamanho em telas menores */

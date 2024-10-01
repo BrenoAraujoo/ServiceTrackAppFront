@@ -1,49 +1,20 @@
+<form [formGroup]="userForm">
 <div class="flex-container-user-tab">
   <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber"  pInputText type="text" />
+    <label class="input-text" for="password">Senha</label>
+    <input class="input-custom" id="password" formControlName="password" pPassword type="password"
+      [feedback]="false" />
   </div>
   <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
-  </div>
-  <div class="input-group">
-    <label class="input-text" for="smartPhoneNumber">Celular</label>
-    <input class="input-custom" id="smartPhoneNumber" pInputText type="text" />
+    <label class="input-text" for="passwordConfirm">Confirmar senha</label>
+    <input class="input-custom" id="passwordConfirm" formControlName="passwordConfirm" pPassword type="text"
+      [feedback]="false" />
+      <div *ngIf="userForm.errors?.['passwordMismatch']">
+        As senhas nao coincidem
+      </div>
   </div>
 </div>
+</form>
 
 
 

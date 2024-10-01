@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../services/user-services/user.service';
-import { CommonModule } from '@angular/common';
 import { User } from '../../models/user/user.model';
 import { ApiResponse } from '../../models/api-response.model';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';

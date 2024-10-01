@@ -9,8 +9,9 @@ import { UserCreateComponent } from './components/user/user-create/user-create.c
  */
 export const routes: Routes = [
     { path: 'users/create', component: UserCreateComponent },  // Criar usuário
+    { path: 'users/:id', component: UserCreateComponent },  // Criar usuário
     { path: 'users', component: UserListComponent },  // Lista de usuários
-    { path: 'users/:id', component: UserDetailComponent},  // Detalhes do usuário por ID
+    //{ path: 'users/:id', component: UserDetailComponent},  // Detalhes do usuário por ID
     { path: '', redirectTo: '/users', pathMatch: 'full' }  // Redireciona para a lista de usuários por padrão
 ];
 @NgModule({

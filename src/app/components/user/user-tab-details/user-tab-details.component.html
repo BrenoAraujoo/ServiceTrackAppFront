@@ -16,7 +16,6 @@
       <label class="input-text" for="smartPhoneNumber">Celular</label>
       <input class="input-custom" id="smartPhoneNumber" formControlName="smartPhoneNumber" pInputText type="text" />
     </div>
-
     <div class="input-group">
       <label class="input-text" for="password">Senha</label>
       <input class="input-custom" id="password" formControlName="password" pPassword type="password"
@@ -26,10 +25,13 @@
       <label class="input-text" for="passwordConfirm">Confirmar senha</label>
       <input class="input-custom" id="passwordConfirm" formControlName="passwordConfirm" pPassword type="text"
         [feedback]="false" />
+      <div *ngIf="userForm.errors?.['passwordMismatch']">
+        As senhas nao coincidem
+      </div>
     </div>
     <div class="input-group">
       <label class="input-text" for="user-type-dropdown">Tipo de usuário</label>
-      <p-dropdown id="user-type-dropdown" [style]="{'width':'100%','height':'50%','align-items': 'center'}"
+      <p-dropdown id="user-type-dropdown" [style]="{'width':'100%','height':'30px','align-items': 'center'}"
         [options]="userTypes">
       </p-dropdown>
     </div>

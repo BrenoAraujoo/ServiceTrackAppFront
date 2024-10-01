@@ -17,6 +17,7 @@ export class UserTabConfigComponent implements OnInit {
   constructor(private userFormService: UserFormService) { }
 
   ngOnInit() {
+    this.userForm = this.userFormService.getUserForm();
   }
 
 }

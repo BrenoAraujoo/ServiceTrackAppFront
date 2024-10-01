@@ -1,15 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user-services/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { UserCreateModel } from '../../models/user/user-create.model';
 
-import {FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
 
 import { UserTabDetailsComponent } from '../user-tab-details/user-tab-details.component';
 import { UserTabConfigComponent } from '../user-tab-config/user-tab-config.component';
 import { UserFormService } from '../../../services/user-services/user-form.service';
+import { passwordMatchValidator } from './PasswordMatchValidator';
+import { ApiResponse } from '../../models/api-response.model';
+import { User } from '../../models/user/user.model';
 
 @Component({
   selector: 'app-user-create',
@@ -22,6 +25,8 @@ export class UserCreateComponent implements OnInit {
 
   userForm!: FormGroup;
   userDetailForm!: FormGroup;
+  userId: string | null = null;
+  isEditMode: boolean = false;
 
   tabs = [
     { title: 'Detalhes', content: UserTabDetailsComponent },
@@ -32,32 +37,47 @@ export class UserCreateComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private userFormService: UserFormService,
-    private router: Router) { }
+    private route: ActivatedRoute) { }
   ngOnInit(): void {
 
 
-    
+
+
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       jobPosition: [''],
       smartPhoneNumber: [''],
-      password: [''],
-      passwordConfirm: ['']
-    })
+      password: ['', Validators.required],
+      passwordConfirm: ['', Validators.required]
+    }, { validators: passwordMatchValidator() })
 
+    //Seta o userForm para que os componentes 'tabs' possam acessar esse form
     this.userFormService.setUserForm(this.userForm);
 
+    this.route.paramMap.subscribe(params => {
 
+      this.userId = params.get('id');
+      this.isEditMode = this.userId != null;
+   
+      if (this.isEditMode && this.userId) {
+        this.userService.getUserById(this.userId).subscribe((response: ApiResponse<User>) => {
+          if (response.isSuccess) {
+            this.userForm.patchValue({
+              name: response.data.name,
+              email: response.data.email,
+              jobPosition: response.data.jobPosition,
+              smartPhoneNumber: response.data.smartPhoneNumber
+            })
+          }
+        });
+      }
+    })
   }
 
   createUser(): void {
 
-    const password = this.userForm.get('password')?.value;
-    const passwordConfirm = this.userForm.get('passwordConfirm')?.value;
 
-    console.log(password + ' - ' + passwordConfirm)
-  
     if (this.userForm.valid) {
 
       const userCreateModel: UserCreateModel = this.userForm.value;
@@ -69,11 +89,10 @@ export class UserCreateComponent implements OnInit {
 
         },
         error: (err) => {
-          console.error('Erro na requisição:', err); // Mostra toda a estrutura do erro
+          console.error('Erro na requisição:', err);
           if (err.error) {
 
-            const errorResponse = err.error; // ou err.message, err.json(), etc.
-            // Caso a estrutura do erro seja diferente
+            const errorResponse = err.error; 
             console.log('Código:', errorResponse.error.code || 'Código não disponível');
             console.log('Status code:', err.status || 'Status code nao disponivel');
             console.log('Mensagem:', errorResponse.error.message || 'Mensagem não disponível');
@@ -88,6 +107,10 @@ export class UserCreateComponent implements OnInit {
       console.log('Formulario invalido!!!')
     }
 
+  }
+
+  saveUser(): void{
+    console.log('usuário salvo!')
   }
 
 }
