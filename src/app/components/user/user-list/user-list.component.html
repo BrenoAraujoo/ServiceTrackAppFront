@@ -33,8 +33,8 @@
           </td>
           <td>
             <div class="card flex justify-content-center">
-            <button *ngIf="user.active" pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-text" style="color: #ff5858;"></button>
-            <button *ngIf="!user.active" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-text" (click)="activateUser(user.id)"></button>
+            <button *ngIf="user.active" pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-text" (click)="changeUserStatus(user.id, false) "style="color: #ff5858;"></button>
+            <button *ngIf="!user.active" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-text" (click)="changeUserStatus(user.id, true)"></button>
           </div>
           </td>
         </tr>

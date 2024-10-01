@@ -23,8 +23,9 @@ export class UserService {
     return this.http.post<ApiResponse<UserCreateModel>>('https://localhost:7278/v1/users', user);
   }
 
-  activateUser(userId: string): Observable<ApiResponse<void>> {
-    return this.http.put<void>(`https://localhost:7278/v1/users/${userId}/activate`, null, { observe: 'response' })
+  changeUserStatus(userId: string, status: boolean): Observable<ApiResponse<void>> {
+    const action = status?'activate':'deactivate';
+    return this.http.put<void>(`https://localhost:7278/v1/users/${userId}/${action}`, null, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<void>) => {
           // Verifica se a resposta é um código de sucesso

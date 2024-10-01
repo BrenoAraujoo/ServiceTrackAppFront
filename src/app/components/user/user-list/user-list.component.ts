@@ -48,23 +48,24 @@ export class UserListComponent implements OnInit {
     return active ? 'success' : 'danger';
   }
 
-  activateUser(userId: string) {
-    this.userService.activateUser(userId).subscribe({
+  changeUserStatus(userId: string, status: boolean) {
+    this.userService.changeUserStatus(userId, status).subscribe({
       next: (response: ApiResponse<void>) => {
-        if(response.isSuccess){
-          console.log('Ativação do usuário bem sucedida');
-          const userToActivate = this.users.find(user => user.id === userId);
-          if(userToActivate){
-            this.users = this.users.map( user => user.id === userId? {...user, active: true}: user);
-          }
+        if (response.isSuccess) {
+          console.log(`${status ? 'Ativação' : 'Desativação'} do usuário bem sucedida`);
+  
+          // Atualiza a lista de usuários de forma imutável
+          this.users = this.users.map(user => 
+            user.id === userId ? { ...user, active: status } : user
+          );
+        } else {
+          console.log('Erro da API: ', response.error?.code, response.error?.message);
         }
-        else
-        console.log('Erro da API: ',response.error?.code,response.error?.message);
-
       },
       error: (err) => {
-        console.log('Ativação do usuário não foi efetuada', err);
+        console.log(`${status ? 'Ativação' : 'Desativação'} do usuário não foi efetuada`, err);
       }
-    })
+    });
   }
+  
 }
