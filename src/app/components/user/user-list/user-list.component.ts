@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
 import { User } from '../../models/user/user.model';
 import { ApiResponse } from '../../models/api-response.model';
+import { ToastService } from '../../../services/toastr-services/toast-service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -17,13 +18,15 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-     private router: Router) { }
+    private router: Router,
+    private toastService: ToastService) { }
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe((response: ApiResponse<User>) => {
 
       if (response.isSuccess && response.data != null) {
         this.users = Array.isArray(response.data) ? response.data : [response.data];
+        //this.toastService.showSuccess('usuarios','deu bom!');
       } else {
         console.log('erro-> ' + response.error)
       }
@@ -45,25 +48,24 @@ export class UserListComponent implements OnInit {
   }
 
   userStatusColor(active: boolean) {
-    return active ? 'success' : 'danger';
+    return active ? "success" : "danger";
   }
 
   changeUserStatus(userId: string, status: boolean) {
     this.userService.changeUserStatus(userId, status).subscribe({
       next: (response: ApiResponse<void>) => {
         if (response.isSuccess) {
-          console.log(`${status ? 'Ativação' : 'Desativação'} do usuário bem sucedida`);
+
+          this.toastService.showSuccess('Alteração de usuário',` Usuário ${status ? 'ativado':'desativado'} com sucesso`)
   
           // Atualiza a lista de usuários de forma imutável
           this.users = this.users.map(user => 
             user.id === userId ? { ...user, active: status } : user
           );
-        } else {
-          console.log('Erro da API: ', response.error?.code, response.error?.message);
         }
       },
       error: (err) => {
-        console.log(`${status ? 'Ativação' : 'Desativação'} do usuário não foi efetuada`, err);
+        this.toastService.showWarnig('Alteração de usuário',` ${err.message}`)
       }
     });
   }

@@ -26,15 +26,19 @@
           <td>{{ user.email }}</td>
           <td>{{ user.jobPosition }}</td>
           <td>{{ user.smartPhoneNumber }}</td>
-          <td>{{ getUserStatus(user) }}</td>
+          <td>
+            <div [ngClass]="user.active ? 'active-user' : 'inactive-user'">{{getUserStatus(user)}}</div>
+          </td>
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text"
               (click)="viewUser(user.id)"></button>
           </td>
           <td>
             <div class="card flex justify-content-center">
-            <button *ngIf="user.active" pButton pRipple icon="pi pi-times" class="p-button-rounded p-button-text" (click)="changeUserStatus(user.id, false) "style="color: #ff5858;"></button>
-            <button *ngIf="!user.active" pButton pRipple icon="pi pi-check" class="p-button-rounded p-button-text" (click)="changeUserStatus(user.id, true)"></button>
+            <button *ngIf="user.active" pButton pRipple icon="pi pi-times" title="Desativar"
+              class="p-button-rounded p-button-text" (click)="changeUserStatus(user.id, false)" style="color: #ff5858;"></button>
+            <button *ngIf="!user.active" pButton pRipple icon="pi pi-check" title="Ativar"
+              class="p-button-rounded p-button-text" (click)="changeUserStatus(user.id, true)" ></button>
           </div>
           </td>
         </tr>

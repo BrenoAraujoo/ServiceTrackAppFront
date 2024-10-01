@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { ToastModule } from 'primeng/toast';
 //import { SharedModule } from 'primeng/api';
 
 
@@ -9,7 +10,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
   standalone: true,
   imports: [
     RouterOutlet,
-    SidebarComponent],
+    SidebarComponent,
+    ToastModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -53,7 +53,7 @@ export class UserService {
             isSuccess: false,
             error: {
               code: error.status,
-              message: 'Erro genérico ActivateUser',
+              message: error.message,
               erros: [],
             },
           };
