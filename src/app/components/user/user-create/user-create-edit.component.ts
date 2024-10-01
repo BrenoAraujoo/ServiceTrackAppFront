@@ -18,8 +18,8 @@ import { User } from '../../models/user/user.model';
   selector: 'app-user-create',
   standalone: true,
   imports: [SharedModuleModule],
-  templateUrl: './user-create.component.html',
-  styleUrl: './user-create.component.scss'
+  templateUrl: './user-create-edit.component.html',
+  styleUrl: './user-create-edit.component.scss'
 })
 export class UserCreateComponent implements OnInit {
 
@@ -62,7 +62,7 @@ export class UserCreateComponent implements OnInit {
    
       if (this.isEditMode && this.userId) {
         this.userService.getUserById(this.userId).subscribe((response: ApiResponse<User>) => {
-          if (response.isSuccess) {
+          if (response.isSuccess && response.data!=null) {
             this.userForm.patchValue({
               name: response.data.name,
               email: response.data.email,

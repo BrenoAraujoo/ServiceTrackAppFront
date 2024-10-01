@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user-services/user.service';
 import { Router } from '@angular/router';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
@@ -9,18 +9,20 @@ import { ApiResponse } from '../../models/api-response.model';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
   imports: [SharedModuleModule],
-  standalone: true,
+  standalone: true
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
   errorMessage: string = '';
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(
+    private userService: UserService,
+     private router: Router) { }
 
   ngOnInit(): void {
     this.userService.getUsers().subscribe((response: ApiResponse<User>) => {
 
-      if (response.isSuccess) {
+      if (response.isSuccess && response.data != null) {
         this.users = Array.isArray(response.data) ? response.data : [response.data];
       } else {
         console.log('erro-> ' + response.error)
@@ -44,5 +46,25 @@ export class UserListComponent implements OnInit {
 
   userStatusColor(active: boolean) {
     return active ? 'success' : 'danger';
+  }
+
+  activateUser(userId: string) {
+    this.userService.activateUser(userId).subscribe({
+      next: (response: ApiResponse<void>) => {
+        if(response.isSuccess){
+          console.log('Ativação do usuário bem sucedida');
+          const userToActivate = this.users.find(user => user.id === userId);
+          if(userToActivate){
+            this.users = this.users.map( user => user.id === userId? {...user, active: true}: user);
+          }
+        }
+        else
+        console.log('Erro da API: ',response.error?.code,response.error?.message);
+
+      },
+      error: (err) => {
+        console.log('Ativação do usuário não foi efetuada', err);
+      }
+    })
   }
 }

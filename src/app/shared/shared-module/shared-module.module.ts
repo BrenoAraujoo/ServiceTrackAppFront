@@ -12,6 +12,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToggleButtonModule  } from 'primeng/togglebutton';
 
 @NgModule({
   exports: [
@@ -27,7 +28,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ReactiveFormsModule,
     IconFieldModule,
     TagModule,
-    DropdownModule
+    DropdownModule,
+    ToggleButtonModule 
   ]
 })
 export class SharedModuleModule { }

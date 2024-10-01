@@ -1,8 +1,8 @@
 export interface ApiResponse<T> {
 
-    data: T ,
+    data?: T ,
     isSuccess: boolean,
-    error: {
+    error?: {
         code: number,
         message: string,
         erros: string[]

@@ -20,7 +20,7 @@ export class UserDetailComponent implements OnInit{
   ngOnInit(): void {
     const userId = String(this.route.snapshot.paramMap.get('id'));  // Obtém o ID da URL
     this.userService.getUserById(userId).subscribe((response: ApiResponse<User>) => {
-      if(response.isSuccess){
+      if(response.isSuccess && response.data != null){
         this.user = response.data;
         console.log(this.user?.name)
       }
