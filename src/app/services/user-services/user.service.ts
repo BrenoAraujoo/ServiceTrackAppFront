@@ -19,8 +19,37 @@ export class UserService {
     return this.http.get<ApiResponse<User>>(`https://localhost:7278/v1/users/${userId}`)
   }
 
-  createUser(user: UserCreateModel): Observable<ApiResponse<UserCreateModel>>{
-    return this.http.post<ApiResponse<UserCreateModel>>('https://localhost:7278/v1/users', user);
+  createUser(user: UserCreateModel): Observable<ApiResponse<UserCreateModel>> {
+    return this.http.post<ApiResponse<UserCreateModel>>('https://localhost:7278/v1/users', user, { observe: 'response' })
+      .pipe(
+        map((httpResponse: HttpResponse<ApiResponse<UserCreateModel>>) => {
+          if (httpResponse.status === 201) {
+            return {
+              data: httpResponse.body?.data,
+              isSuccess: true,
+              error: undefined
+
+            }
+          } else {
+            return {
+              data: undefined,
+              isSuccess: false,
+              error: httpResponse.body?.error
+            }
+          }
+        }),
+        catchError((error: any) => {
+          const apiError: ApiResponse<UserCreateModel> = error. error || {
+            data: undefined,
+            isSuccess: false,
+            error: {
+              code: error.status,
+              message: error.message
+            }
+          }
+          return throwError(() => apiError);
+        })
+      );
   }
 
   changeUserStatus(userId: string, status: boolean): Observable<ApiResponse<void>> {
@@ -41,8 +70,7 @@ export class UserService {
               isSuccess: false,
               error: {
                 code: httpResponse.status,
-                message: 'Resposta inesperada da API',
-                erros: [],
+                message: 'Resposta inesperada da API'
               },
             };
           }
@@ -53,8 +81,7 @@ export class UserService {
             isSuccess: false,
             error: {
               code: error.status,
-              message: error.message,
-              erros: [],
+              message: error.message
             },
           };
           return throwError(() => apiError);

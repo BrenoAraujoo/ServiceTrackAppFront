@@ -13,6 +13,7 @@ import { UserFormService } from '../../../services/user-services/user-form.servi
 import { passwordMatchValidator } from './PasswordMatchValidator';
 import { ApiResponse } from '../../models/api-response.model';
 import { User } from '../../models/user/user.model';
+import { ToastService } from '../../../services/toastr-services/toast-service';
 
 @Component({
   selector: 'app-user-create',
@@ -37,11 +38,9 @@ export class UserCreateComponent implements OnInit {
     private fb: FormBuilder,
     private userService: UserService,
     private userFormService: UserFormService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private toastService: ToastService) { }
   ngOnInit(): void {
-
-
-
 
     this.userForm = this.fb.group({
       name: ['', Validators.required],
@@ -59,10 +58,10 @@ export class UserCreateComponent implements OnInit {
 
       this.userId = params.get('id');
       this.isEditMode = this.userId != null;
-   
+
       if (this.isEditMode && this.userId) {
         this.userService.getUserById(this.userId).subscribe((response: ApiResponse<User>) => {
-          if (response.isSuccess && response.data!=null) {
+          if (response.isSuccess && response.data != null) {
             this.userForm.patchValue({
               name: response.data.name,
               email: response.data.email,
@@ -85,31 +84,27 @@ export class UserCreateComponent implements OnInit {
       this.userService.createUser(userCreateModel).subscribe({
         next: (response) => {
           if (response.isSuccess)
-            console.log('usuario criado com sucesso!')
-
+            this.toastService.showSuccess('Criação de usuário', 'Usuário criado com sucesso!')
         },
         error: (err) => {
           console.error('Erro na requisição:', err);
           if (err.error) {
 
-            const errorResponse = err.error; 
-            console.log('Código:', errorResponse.error.code || 'Código não disponível');
-            console.log('Status code:', err.status || 'Status code nao disponivel');
-            console.log('Mensagem:', errorResponse.error.message || 'Mensagem não disponível');
-            console.log('Detalhes:', errorResponse.error.erros || 'Detalhes não disponíveis');
+            const errorResponse = err.error;
+            this.toastService.showErro('Erro na criação de usuário', `Codigo: ${errorResponse.code} - Mensagem: ${errorResponse.message}`)
           } else {
-            console.error('Erro genérico:', err);
+            this.toastService.showErro('Erro na criação de usuário', err)
           }
         }
       });
     }
     else {
-      console.log('Formulario invalido!!!')
+      this.toastService.showWarnig('Criação de usuário', 'Dados inválidos')
     }
 
   }
 
-  saveUser(): void{
+  saveUser(): void {
     console.log('usuário salvo!')
   }
 

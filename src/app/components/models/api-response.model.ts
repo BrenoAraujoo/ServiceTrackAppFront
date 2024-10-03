@@ -4,7 +4,6 @@ export interface ApiResponse<T> {
     isSuccess: boolean,
     error?: {
         code: number,
-        message: string,
-        erros: string[]
+        message: string
     }
 }

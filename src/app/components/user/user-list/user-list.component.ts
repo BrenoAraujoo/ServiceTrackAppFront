@@ -26,7 +26,6 @@ export class UserListComponent implements OnInit {
 
       if (response.isSuccess && response.data != null) {
         this.users = Array.isArray(response.data) ? response.data : [response.data];
-        //this.toastService.showSuccess('usuarios','deu bom!');
       } else {
         console.log('erro-> ' + response.error)
       }
