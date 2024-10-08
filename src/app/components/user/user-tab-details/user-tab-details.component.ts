@@ -14,14 +14,21 @@ import { FormGroup } from '@angular/forms';
 export class UserTabDetailsComponent implements OnInit {
 
   userForm!: FormGroup;
-  userTypes: string[] | undefined;
+  userTypes: object[] | undefined;
 
   constructor(private userFormService: UserFormService) { }
 
   ngOnInit() {
    this.userForm = this.userFormService.getUserForm();
 
-   this.userTypes = ['Usuário','Gestor','Administrador']
+   //this.userTypes = ['Usuário','Gestor','Administrador']
+
+   this.userTypes = [
+    { label: 'Administrador', value: 'Admin' },
+    { label: 'Usuário', value: 'User' },
+    { label: 'Gestor', value: 'Manager' }
+  ];
+  
   }
 
 }

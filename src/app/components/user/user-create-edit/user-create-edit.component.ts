@@ -25,7 +25,6 @@ import { ToastService } from '../../../services/toastr-services/toast-service';
 export class UserCreateComponent implements OnInit {
 
   userForm!: FormGroup;
-  userDetailForm!: FormGroup;
   userId: string | null = null;
   isEditMode: boolean = false;
 
@@ -48,7 +47,8 @@ export class UserCreateComponent implements OnInit {
       jobPosition: [''],
       smartPhoneNumber: [''],
       password: ['', Validators.required],
-      passwordConfirm: ['', Validators.required]
+      passwordConfirm: ['', Validators.required],
+      userRole: ['', Validators.required]
     }, { validators: passwordMatchValidator() })
 
     //Seta o userForm para que os componentes 'tabs' possam acessar esse form
@@ -66,7 +66,8 @@ export class UserCreateComponent implements OnInit {
               name: response.data.name,
               email: response.data.email,
               jobPosition: response.data.jobPosition,
-              smartPhoneNumber: response.data.smartPhoneNumber
+              smartPhoneNumber: response.data.smartPhoneNumber,
+              userRole: response.data.userRole
             })
           }
         });
@@ -106,6 +107,8 @@ export class UserCreateComponent implements OnInit {
 
   saveUser(): void {
     console.log('usuário salvo!')
+    console.log(this.userForm.get('userRole')?.value)
+    console.log(this.userForm.get('smartPhoneNumber')?.value)
   }
 
 }

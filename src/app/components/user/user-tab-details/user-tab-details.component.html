@@ -30,10 +30,10 @@
       </div>
     </div>
     <div class="input-group">
-      <label class="input-text" for="user-type-dropdown">Tipo de usuário</label>
-      <p-dropdown id="user-type-dropdown" [style]="{'width':'100%','height':'30px','align-items': 'center'}"
-        [options]="userTypes">
+      <label class="input-text" for="userRole">Tipo de usuário</label>
+      <p-dropdown id="userRole" [style]="{'width':'100%','height':'30px','align-items': 'center'}" [options]="userTypes"
+        formControlName="userRole">
       </p-dropdown>
     </div>
-  </div>
-</form>
+    </div>
+    </form>
