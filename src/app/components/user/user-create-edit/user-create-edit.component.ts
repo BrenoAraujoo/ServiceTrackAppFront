@@ -11,9 +11,10 @@ import { UserTabDetailsComponent } from '../user-tab-details/user-tab-details.co
 import { UserTabConfigComponent } from '../user-tab-config/user-tab-config.component';
 import { UserFormService } from '../../../services/user-services/user-form.service';
 import { passwordMatchValidator } from './PasswordMatchValidator';
-import { ApiResponse } from '../../models/api-response.model';
+import { ApiResponse } from '../../models/api-response/api-response.model';
 import { User } from '../../models/user/user.model';
 import { ToastService } from '../../../services/toastr-services/toast-service';
+import { UserUpdateModel } from '../../models/user/user-update.model';
 
 @Component({
   selector: 'app-user-create',
@@ -105,10 +106,47 @@ export class UserCreateComponent implements OnInit {
 
   }
 
-  saveUser(): void {
-    console.log('usuário salvo!')
-    console.log(this.userForm.get('userRole')?.value)
-    console.log(this.userForm.get('smartPhoneNumber')?.value)
+  updateUser(): void {
+
+    const password = this.userForm.get('password')?.value;
+    const passwordConfirm = this.userForm.get('passwordConfirm')?.value;
+
+    //Remove os validadores de password caso os campos estejam preenchidos.
+    if(!password || !passwordConfirm){
+      this.userForm.get('password')?.clearValidators();
+      this.userForm.get('passwordConfirm')?.clearValidators();
+    }
+    
+    // Remove os validadores dos campos específicos
+    this.userForm.get('name')?.clearValidators();
+    this.userForm.get('email')?.clearValidators();
+    this.userForm.get('userRole')?.clearValidators();
+    
+    // Atualiza a validade e os valores dos campos após remover os validadores
+    this.userForm.get('name')?.updateValueAndValidity();
+    this.userForm.get('email')?.updateValueAndValidity();
+    this.userForm.get('password')?.updateValueAndValidity();
+    this.userForm.get('passwordConfirm')?.updateValueAndValidity();
+    this.userForm.get('userRole')?.updateValueAndValidity();
+    
+    if(this.userForm.valid){
+      const userUpdateModel: UserUpdateModel = this.userForm.value; 
+
+      this.userService.updateUser(userUpdateModel, this.userId!).subscribe({
+          next: (response) => {
+            if(response.isSuccess)
+              this.toastService.showSuccess('Atualização de usuário','Usuário atualizado com sucesso!')
+          },error: (err) => {
+            if(err.error){
+              const errorResponse = err.error;
+              this.toastService.showErro('Atualização de usuário', `Código: ${errorResponse.code} - Mensagem: ${errorResponse.message}` )
+            }
+            
+          }
+      })
+    }else{
+        this.toastService.showWarnig('Atualização de usuário','Dados inválidos')
+    }
   }
 
 }

@@ -1,9 +1,10 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, map, throwError } from 'rxjs';
-import { ApiResponse } from '../../components/models/api-response.model';
+import { ApiResponse } from '../../components/models/api-response/api-response.model';
 import { User } from '../../components/models/user/user.model';
 import { UserCreateModel } from '../../components/models/user/user-create.model';
+import { UserUpdateModel } from '../../components/models/user/user-update.model';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,6 @@ export class UserService {
               data: httpResponse.body?.data,
               isSuccess: true,
               error: undefined
-
             }
           } else {
             return {
@@ -51,6 +51,41 @@ export class UserService {
         })
       );
   }
+  
+  updateUser (user: UserUpdateModel, userId: string): Observable<ApiResponse<UserUpdateModel>>{
+
+    return this.http.put<ApiResponse<UserUpdateModel>>(`https://localhost:7278/v1/users/${userId}`, user, { observe: 'response' })
+      .pipe(
+        map((httpResponse: HttpResponse<ApiResponse<UserUpdateModel>>) => {
+          if (httpResponse.status === 204) {
+            return {
+              data: httpResponse.body?.data,
+              isSuccess: true,
+              error: undefined
+            }
+          } else {
+            return {
+              data: undefined,
+              isSuccess: false,
+              error: httpResponse.body?.error
+            }
+          }
+        }),
+        catchError((error: any) => {
+          const apiError: ApiResponse<UserCreateModel> = error. error || {
+            data: undefined,
+            isSuccess: false,
+            error: {
+              code: error.status,
+              message: error.message
+            }
+          }
+          return throwError(() => apiError);
+        })
+      );
+
+  }
+    
 
   changeUserStatus(userId: string, status: boolean): Observable<ApiResponse<void>> {
     const action = status?'activate':'deactivate';

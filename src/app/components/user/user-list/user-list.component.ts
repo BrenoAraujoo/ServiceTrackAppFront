@@ -3,7 +3,7 @@ import { UserService } from '../../../services/user-services/user.service';
 import { Router } from '@angular/router';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
 import { User } from '../../models/user/user.model';
-import { ApiResponse } from '../../models/api-response.model';
+import { ApiResponse } from '../../models/api-response/api-response.model';
 import { ToastService } from '../../../services/toastr-services/toast-service';
 @Component({
   selector: 'app-user-list',
