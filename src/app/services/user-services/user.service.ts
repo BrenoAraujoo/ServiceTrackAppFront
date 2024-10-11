@@ -5,6 +5,7 @@ import { ApiResponse } from '../../components/models/api-response/api-response.m
 import { User } from '../../components/models/user/user.model';
 import { UserCreateModel } from '../../components/models/user/user-create.model';
 import { UserUpdateModel } from '../../components/models/user/user-update.model';
+import { PaginatedApiResponse } from '../../components/models/api-response/api-paginated-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,12 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(): Observable<ApiResponse<User>> {
-    return this.http.get<ApiResponse<User>>('https://localhost:7278/v1/users');
+  getUsers(pageNumber?: number, pageSize?: number): Observable<PaginatedApiResponse<User>> {
+
+    pageNumber = pageNumber?? 1;
+    pageSize = pageSize?? 5;
+
+    return this.http.get<PaginatedApiResponse<User>>(`https://localhost:7278/v1/users?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
   getUserById(userId: string): Observable<ApiResponse<User>> {
     return this.http.get<ApiResponse<User>>(`https://localhost:7278/v1/users/${userId}`)

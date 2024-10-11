@@ -15,6 +15,7 @@ import { ToastService } from '../../../services/toastr-services/toast-service';
 export class UserListComponent implements OnInit {
   users: User[] = [];
   errorMessage: string = '';
+  totalUsers: number = 0;
 
   constructor(
     private userService: UserService,
@@ -22,15 +23,9 @@ export class UserListComponent implements OnInit {
     private toastService: ToastService) { }
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((response: ApiResponse<User>) => {
 
-      if (response.isSuccess && response.data != null) {
-        this.users = Array.isArray(response.data) ? response.data : [response.data];
-      } else {
-        console.log('erro-> ' + response.error)
-      }
+    this.getUsers();
 
-    });
   }
 
   viewUser(userId: string): void {
@@ -55,18 +50,40 @@ export class UserListComponent implements OnInit {
       next: (response: ApiResponse<void>) => {
         if (response.isSuccess) {
 
-          this.toastService.showSuccess('Alteração de usuário',` Usuário ${status ? 'ativado':'desativado'} com sucesso`)
-  
+          this.toastService.showSuccess('Alteração de usuário', ` Usuário ${status ? 'ativado' : 'desativado'} com sucesso`)
+
           // Atualiza a lista de usuários de forma imutável
-          this.users = this.users.map(user => 
+          this.users = this.users.map(user =>
             user.id === userId ? { ...user, active: status } : user
           );
         }
       },
       error: (err) => {
-        this.toastService.showWarnig('Alteração de usuário',` ${err.message}`)
+        this.toastService.showWarnig('Alteração de usuário', ` ${err.message}`)
       }
     });
   }
-  
+
+  onPageChange(event: any) {
+    const currentPage = Math.floor(event.first / event.rows) + 1
+
+
+    this.toastService.showInfo("teste", `Botão ${currentPage} clicado`)
+  }
+
+  getUsers(event?: any) {
+    const pageNumber = event ? (event.first / event.rows) + 1 : 1;
+    const pageSize = event ? event.rows : 5;
+    this.userService.getUsers(pageNumber, pageSize).subscribe({
+      next: (response) => {
+        if (response.isSuccess && response.data != null) {
+          this.users = response.data?.result;
+          this.totalUsers = response.data?.totalItems
+        }
+      },
+      error: (err) => {
+        this.toastService.showErro('teste', err.message)
+      }
+    })
+  }
 }
