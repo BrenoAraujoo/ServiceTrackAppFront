@@ -8,7 +8,7 @@ export interface PaginatedApiResponse<T> {
 }
 
 export interface PaginatedResult<T>{
-    result: T[];  
+    entityList: T[];  
     pageIndex: number;
     pageSize: number;
     totalItems: number;

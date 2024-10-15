@@ -16,6 +16,7 @@ export class UserListComponent implements OnInit {
   users: User[] = [];
   errorMessage: string = '';
   totalUsers: number = 0;
+  currentUsers: number = 0;
 
   constructor(
     private userService: UserService,
@@ -77,8 +78,8 @@ export class UserListComponent implements OnInit {
     this.userService.getUsers(pageNumber, pageSize).subscribe({
       next: (response) => {
         if (response.isSuccess && response.data != null) {
-          this.users = response.data?.result;
-          this.totalUsers = response.data?.totalItems
+          this.users = response.data?.entityList;
+          this.totalUsers = response.data?.totalItems;
         }
       },
       error: (err) => {
