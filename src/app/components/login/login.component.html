@@ -1,0 +1,27 @@
+<div class="container">
+    <div class="column left-column">
+        <!-- Conteúdo da coluna 1 (ex: imagem, texto de boas-vindas) -->
+    </div>
+    <div class="right-column">
+        <img src="logo.svg">
+        <div>
+            <h1>Seja bem-vindo</h1>
+            <h4>Por favor, faça login abaixo</h4>
+        </div>
+        <div class="login-box">
+                <div class="input-field">
+                    <label for="email" class="input-text">Email</label>
+                    <input pInputText type="email" id="email" placeholder="Digite seu email" required>
+                </div>
+                <div class="input-field">
+                    <label for="password" class="input-text">Senha</label>
+                    <input pPassword type="password" id="password" placeholder="Digite sua senha" [feedback]="false">
+                </div>
+                <button pButton pRipple label="Entrar" size="small"></button>
+        </div>
+    </div>
+</div>
+
+
+<!-- <img src="logo.svg" alt="">
+    <button label="logar" (click)="login()">logar</button> -->

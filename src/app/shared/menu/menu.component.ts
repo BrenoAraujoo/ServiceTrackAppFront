@@ -14,60 +14,63 @@ import { SidebarService } from '../sidebar/sidebar.service';
 })
 export class MenuComponent implements OnInit {
   items: MenuItem[] | undefined;
-  
-  constructor(private router: Router, private sideBarSerivce: SidebarService){};
+
+  constructor(private router: Router, private sideBarSerivce: SidebarService) { };
 
   ngOnInit() {
-      this.items = [
+    this.items = [
+      {
+        label: 'Cadastros',
+        items: [
           {
-              label: 'Cadastros',
-              items: [
-                  {
-                      label: 'Usuários',
-                      icon: 'pi pi-user-plus',
-                      command: () => this.router.navigate(['/users']).then(()=>{
-                        this.sideBarSerivce.closeSidebar();
-                      })
-                  },
-                  {
-                      label: 'Tarefas',
-                      icon: 'pi pi-wrench',
-                      command: () => this.router.navigate(['users/1']).then(()=> {
-                        this.sideBarSerivce.closeSidebar(); 
-                      })
-                  },
-                  {
-                    label: 'Tipos de Tarefas',
-                    icon: 'pi pi-wrench',
-                    command: () => this.router.navigate(['users/1']).then(()=> {
-                      this.sideBarSerivce.closeSidebar(); 
-                    })
-                }
-              ]
+            label: 'Usuários',
+            icon: 'pi pi-user-plus',
+            command: () => this.router.navigate(['/users']).then(() => {
+              this.sideBarSerivce.closeSidebar();
+            })
           },
           {
-            label: 'Relatórios',
-            items:[
-                {
-                    label: 'Tarefas',
-                    icon: 'pi-receipt'
-                }
-            ]
+            label: 'Tarefas',
+            icon: 'pi pi-wrench',
+            command: () => this.router.navigate(['users/1']).then(() => {
+              this.sideBarSerivce.closeSidebar();
+            })
           },
           {
-              label: 'Configurações',
-              items: [
-                  {
-                      label: 'Configurações',
-                      icon: 'pi pi-cog'
-                  },
-                  {
-                      label: 'Sair',
-                      icon: 'pi pi-sign-out'
-                  }
-              ]
+            label: 'Tipos de Tarefas',
+            icon: 'pi pi-wrench',
+            command: () => this.router.navigate(['users/1']).then(() => {
+              this.sideBarSerivce.closeSidebar();
+            })
           }
-          
-      ];
+        ]
+      },
+      {
+        label: 'Relatórios',
+        items: [
+          {
+            label: 'Tarefas',
+            icon: 'pi-receipt'
+          }
+        ]
+      },
+      {
+        label: 'Configurações',
+        items: [
+          {
+            label: 'Configurações',
+            icon: 'pi pi-cog'
+          },
+          {
+            label: 'Sair',
+            icon: 'pi pi-sign-out',
+            command: () => this.router.navigate(['login']).then(() => {
+              this.sideBarSerivce.closeSidebar();
+            })
+          }
+        ]
+      }
+
+    ];
   }
 }

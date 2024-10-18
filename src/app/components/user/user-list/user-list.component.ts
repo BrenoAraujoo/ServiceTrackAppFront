@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user-services/user.service';
 import { Router } from '@angular/router';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';

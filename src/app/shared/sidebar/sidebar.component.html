@@ -1,5 +1,5 @@
 
-    <div class="card flex justify-content-left align-items-center">
+    <div class="card flex justify-content-left align-items-center" *ngIf="showMenu">
         <p-button (onClick)="sidebarVisible = true" icon="pi pi-bars"></p-button>
         <span class="app-name">
             <img src="logo.svg">
