@@ -38,6 +38,7 @@ body {
     font-size: 2em;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    position: relative; /* Permite posicionar elementos filhos em relação a este container */
 }
 
 /* Coluna 2 onde ficará o formulário de login */
@@ -53,6 +54,33 @@ body {
     overflow: hidden;  /* Evita transbordamento do conteúdo */
 }
 
+.right-column img {
+    width: 300px; /* Aumenta o tamanho da imagem proporcionalmente */
+    height: auto;
+    margin-bottom: 20px; /* Espaço abaixo da imagem */
+}
+
+.full-image {
+    width: 100%; /* Faz a imagem ocupar 100% da largura do container */
+    height: 100%; /* Faz a imagem ocupar 100% da altura do container */
+    object-fit: cover; /* Mantém a proporção da imagem */
+    opacity: 0.7; /* Define a transparência da imagem */
+}
+
+.overlay-text {
+    position: absolute; /* Permite sobrepor o texto na imagem */
+    // top: 50%; /* Centraliza verticalmente */
+    // left: 50%; /* Centraliza horizontalmente */
+    // transform: translate(-50%, -50%); /* Ajusta a posição para centralizar */
+    // color: white; /* Cor do texto */
+    // text-align: left; /* Centraliza o texto */
+    // z-index: 1; /* Coloca o texto acima da imagem */
+    // padding: 20px; /* Adiciona um espaçamento interno */
+    // background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente para melhor legibilidade do texto */
+    // width: 100%; /* Limita a largura do texto ao container */
+    // max-width: 300px; /* Limite máximo para o texto, se necessário */
+}
+
 .login-box {
     background-color: white;
     padding: 30px;
@@ -60,13 +88,21 @@ body {
     border-radius: 10px;
     width: 100%;  /* Adapta ao espaço disponível */
     width: 600px;
-    // max-width: 500px;  /* Limita a largura máxima do login box */
     margin: 20px 0;  /* Margem ajustada */
     overflow: auto;  /* Barra de rolagem se necessário */
 }
 
 h2 {
     margin-bottom: 20px;
+}
+h1,h4 {
+    padding: 15px;
+    color: var(--bluegray-300);
+}
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .input-field {
@@ -98,22 +134,20 @@ button {
     cursor: pointer;
 }
 
-
-  /* Ajustar o tamanho em telas menores */
-  @media (max-width: 1000px) { /* Tamanho da tela que você deseja ajustar */
+@media (max-width: 1000px) { 
     .container {
-    flex-direction: column;
+        flex-direction: column;
     }
-    .right-column{
+    .right-column {
         border-top-left-radius: 0px;
         border-top-right-radius: 0px;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
     }
-    .left-column{
+    .left-column {
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         border-bottom-left-radius: 0px;
         border-bottom-right-radius: 0px;
     }
-  }
+}
