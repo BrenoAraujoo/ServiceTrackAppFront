@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Faz o container principal ocupar 100% da tela */
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;  /* Largura total da tela */
+    padding: 25px;
+    border-radius: 10px;
+    overflow: hidden;  /* Garante que o conteúdo não vaze do contêiner */
+}
+
+/* Cada coluna ocupa 50% da largura */
+.column {
+    flex: 1;
+    height: 100%;
+    overflow: hidden;  /* Adiciona proteção para o conteúdo */
+}
+
+/* Coluna 1 com um background de cor */
+.left-column {
+    background-color: #14B8A6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 2em;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: relative; /* Permite posicionar elementos filhos em relação a este container */
+}
+
+/* Coluna 2 onde ficará o formulário de login */
+.right-column {
+    background-color: #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 20px;
+    overflow: hidden;  /* Evita transbordamento do conteúdo */
+}
+
+.right-column img {
+    width: 300px; /* Aumenta o tamanho da imagem proporcionalmente */
+    height: auto;
+    margin-bottom: 20px; /* Espaço abaixo da imagem */
+}
+
+.full-image {
+    width: 100%; /* Faz a imagem ocupar 100% da largura do container */
+    height: 100%; /* Faz a imagem ocupar 100% da altura do container */
+    object-fit: cover; /* Mantém a proporção da imagem */
+    opacity: 0.7; /* Define a transparência da imagem */
+}
+
+.overlay-text {
+    position: absolute; /* Permite sobrepor o texto na imagem */
+    top: 50%; /* Centraliza verticalmente */
+     left: 45%; /* Centraliza horizontalmente */
+    // transform: translate(-50%, -50%); /* Ajusta a posição para centralizar */
+    color: var(--teal-50); /* Cor do texto */
+    // text-align: left; /* Centraliza o texto */
+    // z-index: 1; /* Coloca o texto acima da imagem */
+    // padding: 20px; /* Adiciona um espaçamento interno */
+    // background-color: rgba(0, 0, 0, 0.5); /* Fundo semitransparente para melhor legibilidade do texto */
+    // width: 100%; /* Limita a largura do texto ao container */
+    // max-width: 300px; /* Limite máximo para o texto, se necessário */
+}
+
+.login-box {
+    background-color: white;
+    padding: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    width: 100%;  /* Adapta ao espaço disponível */
+    width: 600px;
+    margin: 20px 0;  /* Margem ajustada */
+    overflow: auto;  /* Barra de rolagem se necessário */
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+h1,h4 {
+    padding: 15px;
+    color: var(--bluegray-300);
+}
+.welcome-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-field {
+    margin-bottom: 20px;
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button {
+    width: 100%;
+    align-items: center;
+    padding: 10px;
+    color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+@media (max-width: 1000px) { 
+    .container {
+        flex-direction: column;
+    }
+    .right-column {
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+    .left-column {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0px;
+        border-bottom-right-radius: 0px;
+    }
+}

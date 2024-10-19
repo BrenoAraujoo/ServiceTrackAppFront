@@ -1,0 +1,32 @@
+<div class="container">
+
+    <div class="column left-column">
+        <img src="login.jpg" class="full-image" alt="Imagem de fundo">
+        <div class="overlay-text">
+            <p>Organize, automatize e entregue resultados com precisão – Simplifique sua gestão de ordens de
+                serviço!</p>
+        </div>
+    </div>
+    <div class="right-column">
+        <img src="logo.svg">
+        <div class="welcome-message">
+            <h1>Seja bem-vindo</h1>
+            <h4>Por favor, faça login abaixo</h4>
+        </div>
+        <form [formGroup]="loginForm">
+            <div class="login-box">
+                <div class="input-field">
+                    <label for="email" class="input-text">Email</label>
+                    <input formControlName="email" pInputText type="email" id="email" placeholder="Digite seu email"
+                        required>
+                </div>
+                <div class="input-field">
+                    <label for="password" class="input-text">Senha</label>
+                    <input formControlName="password" pPassword type="password" id="password"
+                        placeholder="Digite sua senha" [feedback]="false">
+                </div>
+                <button pButton pRipple label="Entrar" size="small" (click)="login()"></button>
+            </div>
+        </form>
+    </div>
+</div>
