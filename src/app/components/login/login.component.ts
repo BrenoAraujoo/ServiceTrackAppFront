@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { LoginModel } from '../models/auth/login.model';
 import { SharedModuleModule } from '../../shared/shared-module/shared-module.module';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { ToastService } from '../../services/toastr-services/toast-service';
 
 
 @Component({
@@ -11,34 +13,49 @@ import { SharedModuleModule } from '../../shared/shared-module/shared-module.mod
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent  implements OnInit{
+
+  loginForm!: FormGroup;
+  constructor(
+    private _authService: AuthService,
+    private _fb: FormBuilder,
+    private _toastService: ToastService) {
 
 
-  loginModel!: LoginModel;
+  }
+  ngOnInit(): void {
 
-  constructor(private authService: AuthService) {
 
-    
+    this.loginForm = this._fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    })
   }
 
   login():void {
 
-    const   loginModel: LoginModel = {
-      email: 'bianca@gmail.com',
-      password: 'Bianca@123123' 
-    };
+    if (this.loginForm.valid) {
+      const loginModel: LoginModel = this.loginForm.value;
 
-    this.authService.login(loginModel).subscribe({
-      next: (response) => {
-        if(response.isSuccess)
-          console.log(response.data?.accessToken)
-      },
-      error: (err)=>{
-        if(err.error){
-          const errorResponse = err.error;
-          console.log(errorResponse.message)
+      this._authService.login(loginModel).subscribe({
+        next: (response) => {
+          if (response.isSuccess && response.data?.accessToken) {
+            console.log(response.data?.accessToken);
+            this._toastService.showSuccess('login sucesso', response.data?.accessToken)
+          }
+        },
+        error: (err) => {
+          if (err.error) {
+            const errorResponse = err.error;
+            console.log(errorResponse.message);
+            this._toastService.showErro('erro ', errorResponse.message)
+          }
         }
-      }
-    });
+      });
+    }
+    else{
+      this._toastService.showErro('erro', 'Formulario login invalido');
+    }
+
   }
 }

@@ -1,10 +1,10 @@
 <div class="container">
+
     <div class="column left-column">
-        <img src="img.jpg" class="full-image" alt="Imagem de fundo">
+        <img src="login.jpg" class="full-image" alt="Imagem de fundo">
         <div class="overlay-text">
-            <p>Organize, automatize e entregue resultados com precisão 
-                – Simplifique sua gestão de ordens de serviço!</p>
-            <p>Alguma descrição aqui.</p>
+            <p>Organize, automatize e entregue resultados com precisão – Simplifique sua gestão de ordens de
+                serviço!</p>
         </div>
     </div>
     <div class="right-column">
@@ -13,20 +13,20 @@
             <h1>Seja bem-vindo</h1>
             <h4>Por favor, faça login abaixo</h4>
         </div>
-        <div class="login-box">
+        <form [formGroup]="loginForm">
+            <div class="login-box">
                 <div class="input-field">
                     <label for="email" class="input-text">Email</label>
-                    <input pInputText type="email" id="email" placeholder="Digite seu email" required>
+                    <input formControlName="email" pInputText type="email" id="email" placeholder="Digite seu email"
+                        required>
                 </div>
                 <div class="input-field">
                     <label for="password" class="input-text">Senha</label>
-                    <input pPassword type="password" id="password" placeholder="Digite sua senha" [feedback]="false">
+                    <input formControlName="password" pPassword type="password" id="password"
+                        placeholder="Digite sua senha" [feedback]="false">
                 </div>
-                <button pButton pRipple label="Entrar" size="small"></button>
-        </div>
+                <button pButton pRipple label="Entrar" size="small" (click)="login()"></button>
+            </div>
+        </form>
     </div>
 </div>
-
-
-<!-- <img src="logo.svg" alt="">
-    <button label="logar" (click)="login()">logar</button> -->

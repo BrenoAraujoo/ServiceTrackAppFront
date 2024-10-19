@@ -16,7 +16,7 @@ body {
     display: flex;
     height: 100vh;
     width: 100vw;  /* Largura total da tela */
-    padding: 30px;
+    padding: 25px;
     border-radius: 10px;
     overflow: hidden;  /* Garante que o conteúdo não vaze do contêiner */
 }
@@ -69,10 +69,10 @@ body {
 
 .overlay-text {
     position: absolute; /* Permite sobrepor o texto na imagem */
-    // top: 50%; /* Centraliza verticalmente */
-    // left: 50%; /* Centraliza horizontalmente */
+    top: 50%; /* Centraliza verticalmente */
+     left: 45%; /* Centraliza horizontalmente */
     // transform: translate(-50%, -50%); /* Ajusta a posição para centralizar */
-    // color: white; /* Cor do texto */
+    color: var(--teal-50); /* Cor do texto */
     // text-align: left; /* Centraliza o texto */
     // z-index: 1; /* Coloca o texto acima da imagem */
     // padding: 20px; /* Adiciona um espaçamento interno */

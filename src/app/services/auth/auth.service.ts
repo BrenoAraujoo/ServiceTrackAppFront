@@ -10,12 +10,12 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 })
 export class AuthService {
 
-constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
 
-  login(loginModel: LoginModel) : Observable<ApiResponse<Token>>{
+  login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
 
-    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/login', loginModel, {observe: 'response'})
+    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/login', loginModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200) {
@@ -34,7 +34,7 @@ constructor(private http: HttpClient) { }
           }
         }),
         catchError((error: any) => {
-          const apiError: ApiResponse<Token> = error. error || {
+          const apiError: ApiResponse<Token> = error.error || {
             data: undefined,
             isSuccess: false,
             error: {
@@ -44,8 +44,7 @@ constructor(private http: HttpClient) { }
           }
           return throwError(() => apiError);
         })
-        
-      )
 
+      )
   }
 }
