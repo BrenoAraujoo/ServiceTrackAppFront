@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user-services/user.service';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserCreateModel } from '../../models/user/user-create.model';
+import { UserCreateModel } from '../../../models/user/user-create.model';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
@@ -11,10 +11,10 @@ import { UserTabDetailsComponent } from '../user-tab-details/user-tab-details.co
 import { UserTabConfigComponent } from '../user-tab-config/user-tab-config.component';
 import { UserFormService } from '../../../services/user-services/user-form.service';
 import { passwordMatchValidator } from './PasswordMatchValidator';
-import { ApiResponse } from '../../models/api-response/api-response.model';
-import { User } from '../../models/user/user.model';
+import { ApiResponse } from '../../../models/api-response/api-response.model';
+import { User } from '../../../models/user/user.model';
 import { ToastService } from '../../../services/toastr-services/toast-service';
-import { UserUpdateModel } from '../../models/user/user-update.model';
+import { UserUpdateModel } from '../../../models/user/user-update.model';
 
 @Component({
   selector: 'app-user-create',

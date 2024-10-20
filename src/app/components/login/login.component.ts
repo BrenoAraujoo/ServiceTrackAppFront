@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
-import { LoginModel } from '../models/auth/login.model';
+import { LoginModel } from '../../models/auth/login.model';
 import { SharedModuleModule } from '../../shared/shared-module/shared-module.module';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from '../../services/toastr-services/toast-service';
