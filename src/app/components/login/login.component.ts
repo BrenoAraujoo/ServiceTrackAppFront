@@ -4,6 +4,7 @@ import { LoginModel } from '../../models/auth/login.model';
 import { SharedModuleModule } from '../../shared/shared-module/shared-module.module';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from '../../services/toastr-services/toast-service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class LoginComponent  implements OnInit{
   constructor(
     private _authService: AuthService,
     private _fb: FormBuilder,
-    private _toastService: ToastService) {
+    private _toastService: ToastService,
+    private _router: Router ) {
 
 
   }
@@ -42,6 +44,8 @@ export class LoginComponent  implements OnInit{
           if (response.isSuccess && response.data?.accessToken) {
             console.log(response.data?.accessToken);
             this._toastService.showSuccess('login sucesso', response.data?.accessToken)
+            this._authService.storeToken(response.data?.accessToken)
+            this._router.navigate(['/users'])
           }
         },
         error: (err) => {

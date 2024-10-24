@@ -4,13 +4,17 @@ import { LoginModel } from '../../models/auth/login.model';
 import { ApiResponse } from '../../models/api-response/api-response.model';
 import { Token } from '../../models/auth/token.model';
 import { catchError, map, Observable, throwError } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(private http: HttpClient) { }
+  
+  private readonly TOKEN_KEY = '';
+
+  constructor(private http: HttpClient , private jwtHelper: JwtHelperService) { }
 
 
   login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
@@ -47,4 +51,22 @@ export class AuthService {
 
       )
   }
+
+  storeToken(token: string): void{
+    localStorage.setItem(this.TOKEN_KEY, token)
+  }
+  getToken(): string | null{
+    return localStorage.getItem(this.TOKEN_KEY)
+  }
+  removeToken(): void{
+    localStorage.removeItem(this.TOKEN_KEY)
+  }
+
+  isAuthenticated(): boolean {
+
+    const token = this.getToken();
+    const isTokenExpired = this.jwtHelper.isTokenExpired(token);
+    return token != '' && !isTokenExpired;
+  }
+    
 }
