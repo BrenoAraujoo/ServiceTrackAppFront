@@ -12,3 +12,13 @@ export class RefreshAccessTokenModel {
         this.refreshToken = refreshToken;
     }
 }
+
+export class LogoutModel {
+    accessToken: string;
+    refreshToken: string;
+
+    constructor(accessToken: string, refreshToken: string) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
+}

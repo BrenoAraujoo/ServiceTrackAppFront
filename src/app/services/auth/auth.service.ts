@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginModel, RefreshAccessTokenModel } from '../../models/auth/auth.model';
+import { LoginModel, LogoutModel, RefreshAccessTokenModel } from '../../models/auth/auth.model';
 import { ApiResponse } from '../../models/api-response/api-response.model';
 import { Token } from '../../models/auth/token.model';
 import { catchError, map, Observable, throwError } from 'rxjs';
@@ -18,14 +18,9 @@ export class AuthService {
   constructor(private http: HttpClient , private jwtHelper: JwtHelperService) { }
 
 
-  refreshAccessToken(){
-    
-    
-    const token = this.getToken() ?? "";
-    const refreshAccessToken = this.getRefreshToken() ?? "";
-    const refreshModel = new RefreshAccessTokenModel(token,refreshAccessToken);
+  login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
 
-    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/refresh', refreshModel, { observe: 'response' })
+    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/login', loginModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200 && httpResponse.body?.data) {
@@ -57,10 +52,58 @@ export class AuthService {
 
       )
   }
+  logout(): Observable<ApiResponse<any>> {
+    const token = this.getToken() ?? "";
+    const refreshAccessToken = this.getRefreshToken() ?? "";
+    const logoutModel = new LogoutModel(token, refreshAccessToken);
 
-  login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
+    this.removeRefreshToken();
+    this.removeToken();
+    
+    return this.http.post<ApiResponse<any>>('https://localhost:7278/v1/logout', logoutModel, { observe: 'response' })
+        .pipe(
+            map((httpResponse: HttpResponse<ApiResponse<any>>) => {
+                if (httpResponse.status === 204) {
 
-    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/login', loginModel, { observe: 'response' })
+                }
+                return {
+                    data: undefined,
+                    isSuccess: httpResponse.status === 204,
+                    error: undefined
+                };
+            }),
+            catchError((error: any) => {
+                const apiError: ApiResponse<any> = {
+                    data: undefined,
+                    isSuccess: false,
+                    error: {
+                        code: error.status,
+                        message: error.message || 'Erro desconhecido ao realizar logout'
+                    }
+                };
+                return throwError(() => apiError);
+            })
+        );
+}
+
+  refreshAccessToken(){
+    
+    const token = this.getToken();
+    const refreshAccessToken = this.getRefreshToken();
+    
+    if (!token || !refreshAccessToken) {
+      return throwError(() => ({
+          data: undefined,
+          isSuccess: false,
+          error: {
+              code: 400,
+              message: 'Token ou Refresh Token ausente.'
+          }
+      }));
+  } 
+  const refreshModel = new RefreshAccessTokenModel(token,refreshAccessToken);
+
+    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/refresh', refreshModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200 && httpResponse.body?.data) {

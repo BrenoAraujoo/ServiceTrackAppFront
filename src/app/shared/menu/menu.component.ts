@@ -4,6 +4,7 @@ import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { SidebarService } from '../sidebar/sidebar.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -15,7 +16,7 @@ import { SidebarService } from '../sidebar/sidebar.service';
 export class MenuComponent implements OnInit {
   items: MenuItem[] | undefined;
 
-  constructor(private router: Router, private sideBarSerivce: SidebarService) { };
+  constructor(private router: Router, private sideBarSerivce: SidebarService, private authService: AuthService) { };
 
   ngOnInit() {
     this.items = [
@@ -65,6 +66,7 @@ export class MenuComponent implements OnInit {
             label: 'Sair',
             icon: 'pi pi-sign-out',
             command: () => this.router.navigate(['login']).then(() => {
+              this.authService.logout();
               this.sideBarSerivce.closeSidebar();
             })
           }
