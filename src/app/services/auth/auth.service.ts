@@ -1,6 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginModel } from '../../models/auth/login.model';
+import { LoginModel, RefreshAccessTokenModel } from '../../models/auth/auth.model';
 import { ApiResponse } from '../../models/api-response/api-response.model';
 import { Token } from '../../models/auth/token.model';
 import { catchError, map, Observable, throwError } from 'rxjs';
@@ -12,18 +12,24 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
 
   
-  private readonly TOKEN_KEY = '';
+  private readonly TOKEN_KEY = 'token';
+  private readonly REFRESH_TOKEN_KEY='refreshToken';
 
   constructor(private http: HttpClient , private jwtHelper: JwtHelperService) { }
 
 
-  login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
+  refreshAccessToken(){
+    
+    
+    const token = this.getToken() ?? "";
+    const refreshAccessToken = this.getRefreshToken() ?? "";
+    const refreshModel = new RefreshAccessTokenModel(token,refreshAccessToken);
 
-    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/login', loginModel, { observe: 'response' })
+    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/refresh', refreshModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
-          if (httpResponse.status === 200) {
-            console.log(httpResponse.body?.data?.accessToken)
+          if (httpResponse.status === 200 && httpResponse.body?.data) {
+            this.storeToken(httpResponse.body?.data?.accessToken, httpResponse.body?.data?.refreshToken)
             return {
               data: httpResponse.body?.data,
               isSuccess: true,
@@ -52,14 +58,56 @@ export class AuthService {
       )
   }
 
-  storeToken(token: string): void{
+  login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
+
+    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/login', loginModel, { observe: 'response' })
+      .pipe(
+        map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
+          if (httpResponse.status === 200 && httpResponse.body?.data) {
+            this.storeToken(httpResponse.body?.data?.accessToken, httpResponse.body?.data?.refreshToken)
+            return {
+              data: httpResponse.body?.data,
+              isSuccess: true,
+              error: undefined
+            }
+          } else {
+            return {
+              data: undefined,
+              isSuccess: false,
+              error: httpResponse.body?.error
+            }
+          }
+        }),
+        catchError((error: any) => {
+          const apiError: ApiResponse<Token> = error.error || {
+            data: undefined,
+            isSuccess: false,
+            error: {
+              code: error.status,
+              message: error.message
+            }
+          }
+          return throwError(() => apiError);
+        })
+
+      )
+  }
+
+  storeToken(token: string, refreshToken: string): void{
     localStorage.setItem(this.TOKEN_KEY, token)
+    localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken)
   }
   getToken(): string | null{
     return localStorage.getItem(this.TOKEN_KEY)
   }
+  getRefreshToken(): string | null {
+    return localStorage.getItem(this.REFRESH_TOKEN_KEY)
+  }
   removeToken(): void{
     localStorage.removeItem(this.TOKEN_KEY)
+  }
+  removeRefreshToken(): void{
+    localStorage.removeItem(this.REFRESH_TOKEN_KEY)
   }
 
   isAuthenticated(): boolean {

@@ -17,11 +17,13 @@ export const routes: Routes = [
     },
     {
         path: 'users/create',
-        component: UserCreateComponent
+        component: UserCreateComponent,
+        canActivate:([AuthGuard])
     }, 
     {
         path: 'users/:id',
-        component: UserCreateComponent
+        component: UserCreateComponent,
+        canActivate:([AuthGuard])
     },
     {
         path: 'users',
