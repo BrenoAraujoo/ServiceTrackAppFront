@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
-import { UserFormService } from '../../../services/user-services/user-form.service';
+import { UserFormService } from '../../services/user-form.service';
 import { FormGroup } from '@angular/forms';
 
 @Component({

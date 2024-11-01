@@ -1,11 +1,11 @@
 import { inject, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserListComponent } from './components/user/user-list/user-list.component';
-import { UserCreateComponent } from './components/user/user-create-edit/user-create-edit.component';
-import { LoginComponent } from './components/login/login.component';
-import { AuthService } from './services/auth/auth.service';
+import { UserListComponent } from './user/components/user-list/user-list.component';
+import { UserCreateComponent } from './user/components/user-create-edit/user-create-edit.component';
+import { LoginComponent } from './login/components/login.component';
+import { AuthService } from './core/auth/services/auth.service';
 import { CanActivate } from '@angular/router';
-import { AuthGuard } from './services/auth/AuthGuard.guard';
+import { AuthGuard } from './core/auth/guards/AuthGuard.guard';
 
 /**
  * O Angular processa as rotas de acordo com a ordem

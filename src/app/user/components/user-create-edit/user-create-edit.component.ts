@@ -1,20 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../../services/user-services/user.service';
+import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 
-import { UserCreateModel } from '../../../models/user/user-create.model';
+import { UserCreateModel } from '../../models/user-create.model';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
 
 import { UserTabDetailsComponent } from '../user-tab-details/user-tab-details.component';
 import { UserTabConfigComponent } from '../user-tab-config/user-tab-config.component';
-import { UserFormService } from '../../../services/user-services/user-form.service';
-import { passwordMatchValidator } from './PasswordMatchValidator';
-import { ApiResponse } from '../../../models/api-response/api-response.model';
-import { User } from '../../../models/user/user.model';
-import { ToastService } from '../../../services/toastr-services/toast-service';
-import { UserUpdateModel } from '../../../models/user/user-update.model';
+import { UserFormService } from '../../services/user-form.service';
+import { passwordMatchValidator } from '../../../shared/validators/PasswordMatchValidator';
+import { ApiResponse } from '../../../core/api-response/api-response.model';
+import { User } from '../../models/user.model';
+import { ToastService } from '../../../shared/toastr-services/toast-service';
+import { UserUpdateModel } from '../../models/user-update.model';
 
 @Component({
   selector: 'app-user-create',

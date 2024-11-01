@@ -4,7 +4,7 @@ import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { ToastModule } from 'primeng/toast';
 import { SidebarService } from '../sidebar/sidebar.service';
-import { AuthService } from '../../services/auth/auth.service';
+import { AuthService } from '../../core/auth/services/auth.service';
 
 @Component({
   selector: 'app-menu',

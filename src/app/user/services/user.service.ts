@@ -1,11 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, map, throwError } from 'rxjs';
-import { ApiResponse } from '../../models/api-response/api-response.model';
-import { User } from '../../models/user/user.model';
-import { UserCreateModel } from '../../models/user/user-create.model';
-import { UserUpdateModel } from '../../models/user/user-update.model';
-import { PaginatedApiResponse } from '../../models/api-response/api-paginated-response.model';
+import { ApiResponse } from '../../core/api-response/api-response.model';
+import { User } from '../models/user.model';
+import { UserCreateModel } from '../models/user-create.model';
+import { UserUpdateModel } from '../models/user-update.model';
+import { PaginatedApiResponse } from '../../core/api-response/api-paginated-response.model';
 
 @Injectable({
   providedIn: 'root'
