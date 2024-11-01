@@ -1,10 +1,13 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginModel, LogoutModel, RefreshAccessTokenModel } from '../../models/auth/auth.model';
-import { ApiResponse } from '../../models/api-response/api-response.model';
-import { Token } from '../../models/auth/token.model';
+
+import { ApiResponse } from '../../api-response/api-response.model';
+import { Token } from '../models/token.model';
 import { catchError, map, Observable, throwError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { LoginModel } from '../../../login/models/login.model';
+import { LogoutModel } from '../models/logout.model';
+import { RefreshAccessTokenModel } from '../models/refreshacesstoken.model';
 
 @Injectable({
   providedIn: 'root'
