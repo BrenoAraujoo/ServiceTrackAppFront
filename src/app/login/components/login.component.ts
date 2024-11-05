@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../core/auth/services/auth.service';
 import { LoginModel } from '../models/login.model';
 import { SharedModuleModule } from '../../shared/shared-module/shared-module.module';
-import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastService } from '../../shared/toastr-services/toast-service';
 import { Router } from '@angular/router';
 
@@ -33,7 +33,8 @@ export class LoginComponent  implements OnInit{
       password: ['', Validators.required]
     })
 
-    this.refresh();
+    if(!this._authService.isAuthenticated())
+      this.refresh();
 
   }
 
@@ -46,7 +47,7 @@ export class LoginComponent  implements OnInit{
         next: (response) => {
           if (response.isSuccess && response.data?.accessToken) {
             console.log(response.data?.accessToken);
-            this._toastService.showSuccess('login sucesso', response.data?.accessToken)
+            this._toastService.showSuccess('Sucesso', 'Acesso autorizado')
             this._authService.storeToken(response.data?.accessToken, response.data?.refreshToken)
             this._router.navigate(['/users'])
           }
@@ -55,7 +56,7 @@ export class LoginComponent  implements OnInit{
           if (err.error) {
             const errorResponse = err.error;
             console.log(errorResponse.message);
-            this._toastService.showErro('erro ', errorResponse.message)
+            this._toastService.showErro('Erro', errorResponse.message)
           }
         }
       });
@@ -68,7 +69,6 @@ export class LoginComponent  implements OnInit{
 
   refresh():void {
 
-    this._router.navigate(['/users']);
 
       this._authService.refreshAccessToken().subscribe({
         next: (response) => {
@@ -81,6 +81,8 @@ export class LoginComponent  implements OnInit{
         error: (err) => {
           if (err.error) {
             const errorResponse = err.error;
+            this._authService.removeRefreshToken();
+            this._authService.removeToken();
 
           }
         }
