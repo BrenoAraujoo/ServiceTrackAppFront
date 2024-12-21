@@ -30,7 +30,7 @@ export class UserListComponent implements OnInit {
   }
 
   viewUser(userId: string): void {
-    this.router.navigate([`/users/${userId}`]);  // Redireciona para a rota com o ID do usuário
+    this.router.navigate([`/users/${userId}`]); 
   }
 
 
@@ -65,12 +65,6 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  onPageChange(event: any) {
-    const currentPage = Math.floor(event.first / event.rows) + 1
-
-
-    this.toastService.showInfo("teste", `Botão ${currentPage} clicado`)
-  }
 
   getUsers(event?: any) {
     const pageNumber = event ? (event.first / event.rows) + 1 : 1;
@@ -83,7 +77,7 @@ export class UserListComponent implements OnInit {
         }
       },
       error: (err) => {
-        this.toastService.showErro('teste', err.message)
+        this.toastService.showErro('Erro ao obter os usuários', err.message)
       }
     })
   }
