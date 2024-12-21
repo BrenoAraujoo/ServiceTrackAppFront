@@ -33,7 +33,9 @@ export class LoginComponent  implements OnInit{
       password: ['', Validators.required]
     })
 
-    if(!this._authService.isAuthenticated())
+    if(this._authService.isAuthenticated())
+      this._router.navigate(['/users'])
+    else
       this.refresh();
 
   }

@@ -16,11 +16,11 @@ export class AuthGuard implements CanActivate{
    
     canActivate(): boolean {
         if(this.authService.isAuthenticated()){
-            this.toastService.showSuccess('Guard','acesso autorizado')
+            //this.toastService.showSuccess('Guard','acesso autorizado')
             return true;
         }else{
             this.router.navigate(['/login'])
-            this.toastService.showErro('Guard','acesso nao autorizado')
+            //this.toastService.showErro('Guard','acesso nao autorizado')
             return false;
         }
     }
