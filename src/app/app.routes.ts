@@ -6,6 +6,7 @@ import { LoginComponent } from './login/components/login.component';
 import { AuthService } from './core/auth/services/auth.service';
 import { CanActivate } from '@angular/router';
 import { AuthGuard } from './core/auth/guards/AuthGuard.guard';
+import { TaskTypeListComponent } from './task-type/components/task-type-list.component';
 
 /**
  * O Angular processa as rotas de acordo com a ordem
@@ -29,6 +30,10 @@ export const routes: Routes = [
         path: 'users',
         component: UserListComponent,
         canActivate: ([AuthGuard])
+    },
+    {
+        path: 'task-type',
+         component: TaskTypeListComponent
     },
     {
         path: '**',

@@ -50,5 +50,24 @@ body {
     }
   }
 
+  /*Default container and headers*/
+
+  .default-list-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 3.2rem;
+    /* Adiciona um preenchimento ao redor */
+}
+
+.default-list-container-header {
+    display: flex;
+    justify-content: space-between;
+    /* Mantém o título e o botão separados */
+    align-items: center;
+    margin-bottom: 1rem;
+    /* Espaçamento abaixo do cabeçalho */
+
+}
 
   
