@@ -16,6 +16,7 @@ import { SharedModuleModule } from '../../../../shared/shared-module/shared-modu
 export class TaskTypeCreateEditComponent implements OnInit {
   taskTypeForm!: FormGroup;
   taskTypeId: string | null = null;
+  isEditMode: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -28,28 +29,36 @@ export class TaskTypeCreateEditComponent implements OnInit {
     this.taskTypeForm = this.fb.group({
       id: [''],
       creatorId: [''],
-      name: ['']
+      name: [''],
+      description: ['']
     });
 
     this.route.paramMap.subscribe(params => {
 
       this.taskTypeId = params.get('id');
+      this.isEditMode = this.taskTypeId != null;
 
-      if (this.taskTypeId) {
-
+      if (this.isEditMode && this.taskTypeId) {
         this.taskTypeService.getTaskTypesById(this.taskTypeId).subscribe((response: ApiResponse<TaskType>) => {
+          if(response.isSuccess && response.data != null)
           this.taskTypeForm.patchValue({
             id: response.data?.id,
             creatorId: response.data?.creatorId,
             name: response.data?.name,
+            description: response.data?.description
             
           })
         })
       }
     })
+  }
 
+  createTaskType(): void {
+    console.log('criando');
+  }
 
-
+  updateTaskType(): void {
+    console.log('atualizando');
   }
 
 }

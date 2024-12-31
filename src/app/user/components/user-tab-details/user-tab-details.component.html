@@ -1,11 +1,11 @@
 <form [formGroup]="userForm">
   <div class="flex-container-user-tab">
     <div class="input-group">
-      <label class="input-text" for="name">Nome</label>
+      <label class="input-text" for="name">Nome<span class="text-danger">*</span></label>
       <input class="input-custom" id="name" formControlName="name" pInputText type="text" />
     </div>
     <div class="input-group">
-      <label class="input-text" for="email">Email</label>
+      <label class="input-text" for="email">Email<span class="text-danger">*</span></label>
       <input class="input-custom" id="email" formControlName="email" pInputText type="text" />
     </div>
     <div class="input-group">
@@ -18,13 +18,13 @@
     </div>
     <div class="input-group">
       <label class="input-text" for="password">Senha</label>
-      <input class="input-custom" id="password" formControlName="password" pPassword type="password"
-        [feedback]="false" placeholder="******"/>
+      <input class="input-custom" id="password" formControlName="password" pPassword type="password" [feedback]="false"
+        placeholder="******" />
     </div>
     <div class="input-group">
       <label class="input-text" for="passwordConfirm">Confirmar senha</label>
       <input class="input-custom" id="passwordConfirm" formControlName="passwordConfirm" pPassword type="password"
-        [feedback]="false" placeholder="******"/>
+        [feedback]="false" placeholder="******" />
       <div *ngIf="userForm.errors?.['passwordMismatch']">
         As senhas nao coincidem
       </div>
@@ -35,5 +35,5 @@
         formControlName="userRole">
       </p-dropdown>
     </div>
-    </div>
-    </form>
+  </div>
+</form>

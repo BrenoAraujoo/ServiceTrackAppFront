@@ -1,6 +1,21 @@
-<form [formGroup]="taskTypeForm">
-{{taskTypeForm.get('name')?.value}}
-{{taskTypeForm.get('id')?.value}}
-{{taskTypeForm.get('creatorId')?.value}}
-
-</form>
+<div class="task-type-create-container">
+  <form [formGroup]="taskTypeForm">
+    <div class="task-type-create-container-header">
+      <h3 class="title">Gerenciar tipos de tarefa</h3>
+      <div>
+        <button *ngIf="!isEditMode" pButton pRipple label="Criar" size="small" (click)="createTaskType()"></button>
+        <button *ngIf="isEditMode" pButton pRipple label="Salvar" size="small" (click)="updateTaskType()"></button>
+      </div>
+    </div>
+    <div class="flex-container">
+      <div class="input-group">
+        <label class="input-text" for="name">Nome <span class="text-danger">*</span></label>
+        <input class="input-custom" id="name" formControlName="name" pInputText type="text" required="true" />
+      </div>
+      <div class="input-group">
+        <label class="input-text" for="description">Descrição</label>
+        <input class="input-custom" id="description" formControlName="description" pInputText type="text" />
+      </div>
+    </div>
+  </form>
+</div>

@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrl: './task-type-list.component.scss'
 })
 export class TaskTypeListComponent implements OnInit {
+
   totalTasks: number = 0;
   tasksTypes: TaskType[] = [];
   currentItem: any = 'Televisao';
@@ -26,8 +27,10 @@ export class TaskTypeListComponent implements OnInit {
     this.getTaskTypes();
   }
 
-
-  viewTaskType(taskTypeId: string){
+  createTaskType(): void{
+  this.router.navigate(['taskType/create'])
+  }
+  viewTaskType(taskTypeId: string): void{
     this.router.navigate([`/taskType/${taskTypeId}`]);
   }
 

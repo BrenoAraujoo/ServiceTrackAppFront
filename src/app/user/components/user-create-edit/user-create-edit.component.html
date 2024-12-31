@@ -3,9 +3,9 @@
 
         <div class="user-create-container-header">
             <h3 class="title">Usuário</h3>
-            <div class="user-create-container-header-button">
-                <button *ngIf="!isEditMode" pButton pRipple label="Criar usuário" size="small" (click)="createUser()"></button>
-                <button *ngIf="isEditMode" pButton pRipple label="Salvar usuário" size="small" (click)="updateUser()"></button>
+            <div>
+                <button *ngIf="!isEditMode" pButton pRipple label="Criar" size="small" (click)="createUser()"></button>
+                <button *ngIf="isEditMode" pButton pRipple label="Salvar" size="small" (click)="updateUser()"></button>
             </div>
         </div>  
                 <div class="card">
