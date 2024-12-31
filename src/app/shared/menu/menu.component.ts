@@ -40,7 +40,7 @@ export class MenuComponent implements OnInit {
           {
             label: 'Tipos de Tarefas',
             icon: 'pi pi-wrench',
-            command: () => this.router.navigate(['/task-type']).then(() => {
+            command: () => this.router.navigate(['/taskType']).then(() => {
               this.sideBarSerivce.closeSidebar();
             })
           }
