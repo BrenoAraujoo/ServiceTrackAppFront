@@ -2,20 +2,20 @@
     <div class="default-list-container-header">
         <h3 class="title">Gerenciar tipos de tarefeas</h3>
         <div class="task-type-list-header-button">
-            <button pButton pRipple label="Adicionar" size="small" (click)="createTaskType()"></button>
+            <button pButton pRipple label="Adicionar" size="small" (click)="createTaskType()"><span>+</span></button>
         </div>
     </div>
-   
-
     <div class="card">
-        <p-table #dt2 [value]="tasksTypes" [tableStyle]="{ 'min-width': '20rem', 'max-width': '100%' }"
+        <p-table #dt2 [value]="tasksTypes" [paginator]="true" [rows]="5"
+            [tableStyle]="{ 'min-width': '20rem', 'max-width': '100%' }" (onLazyLoad)="getTaskTypes()"
             sortMode="multiple">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn style="width:30%">Nome <p-sortIcon field="name" /></th>
-                    <th pSortableColumn style="width:5%">Ativo</th>
+                    <th pSortableColumn style="width:50%">Nome <p-sortIcon field="name" /></th>
+                    <th pSortableColumn style="width:10%">Ativo <p-sortIcon field="active" /></th>
                     <th style="width:5%">Editar</th>
                     <th style="width:5%">Remover</th>
+                    <th style="width:5%">Ativar/Desativar</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-taskType>
@@ -26,12 +26,19 @@
                             {{getTaskTypeStatus(taskType)}}</div>
                     </td>
                     <td>
-                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text" (click)="viewTaskType(taskType.id)"></button>
+                        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text"
+                            (click)="viewTaskType(taskType.id)"></button>
                     </td>
                     <td>
-                        <button pButton icon="pi pi-trash" class=" p-button-rounded p-button-text">
-
-                        </button>
+                        <button pButton icon="pi pi-trash" class=" p-button-rounded p-button-text"></button>
+                    </td>
+                    <td>
+                        <div class="card flex justify-content-center">
+                            <button *ngIf="taskType.active" pButton pRipple icon="pi pi-times" title="Desativar"
+                                class="p-button-rounded p-button-text" style="color: #ff5858;"></button>
+                            <button *ngIf="!taskType.active" pButton pRipple icon="pi pi-check" title="Ativar"
+                                class="p-button-rounded p-button-text"></button>
+                        </div>
                     </td>
                 </tr>
             </ng-template>

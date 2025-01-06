@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskTypeService } from '../../../services/task-type.service';
 import { ActivatedRoute } from '@angular/router';
 import { ApiResponse } from '../../../../core/api-response/api-response.model';
-import { TaskType } from '../../../models/task-type.model';
+import { TaskTypeDetail } from '../../../models/task-type-detail.model';
 import { SharedModuleModule } from '../../../../shared/shared-module/shared-module.module';
 
 @Component({
@@ -29,8 +29,12 @@ export class TaskTypeCreateEditComponent implements OnInit {
     this.taskTypeForm = this.fb.group({
       id: [''],
       creatorId: [''],
-      name: [''],
-      description: ['']
+      name: ['', Validators.required],
+      description: [''],
+      creatorName: [''], 
+      active: [''],
+      creationDate: new FormControl({value:'',disabled:true}),
+      updateDate: ['']
     });
 
     this.route.paramMap.subscribe(params => {
@@ -39,14 +43,14 @@ export class TaskTypeCreateEditComponent implements OnInit {
       this.isEditMode = this.taskTypeId != null;
 
       if (this.isEditMode && this.taskTypeId) {
-        this.taskTypeService.getTaskTypesById(this.taskTypeId).subscribe((response: ApiResponse<TaskType>) => {
+        this.taskTypeService.getTaskTypesById(this.taskTypeId).subscribe((response: ApiResponse<TaskTypeDetail>) => {
           if(response.isSuccess && response.data != null)
           this.taskTypeForm.patchValue({
             id: response.data?.id,
             creatorId: response.data?.creatorId,
             name: response.data?.name,
-            description: response.data?.description
-            
+            description: response.data?.description,
+            creationDate: response.data?.creationDate
           })
         })
       }
@@ -54,7 +58,9 @@ export class TaskTypeCreateEditComponent implements OnInit {
   }
 
   createTaskType(): void {
-    console.log('criando');
+    if(this.taskTypeForm.valid){
+      
+    }
   }
 
   updateTaskType(): void {

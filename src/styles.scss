@@ -10,6 +10,7 @@ body {
     height: 100%;
     margin: 0;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
 }
 
 .input-custom{
@@ -72,5 +73,11 @@ body {
     /* Espaçamento abaixo do cabeçalho */
 
 }
+.active{
+  color: var(--primary-color) // cores do prime ng
+}
 
+.inactive{
+  color: var(--bluegray-200) // cores do prime ng
+}
   

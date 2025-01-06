@@ -8,6 +8,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginModel } from '../../../login/models/login.model';
 import { LogoutModel } from '../models/logout.model';
 import { RefreshAccessTokenModel } from '../models/refreshacesstoken.model';
+import { environment } from '../../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -17,13 +18,14 @@ export class AuthService {
   
   private readonly TOKEN_KEY = 'token';
   private readonly REFRESH_TOKEN_KEY='refreshToken';
+  private readonly API = environment.ApiUrl;
 
   constructor(private http: HttpClient , private jwtHelper: JwtHelperService) { }
 
 
   login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
 
-    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/login', loginModel, { observe: 'response' })
+    return this.http.post<ApiResponse<Token>>(`${this.API}/login`, loginModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200 && httpResponse.body?.data) {
@@ -63,7 +65,7 @@ export class AuthService {
     this.removeRefreshToken();
     this.removeToken();
     
-    return this.http.post<ApiResponse<any>>('https://localhost:7278/v1/logout', logoutModel, { observe: 'response' })
+    return this.http.post<ApiResponse<any>>(`${this.API}/logout`, logoutModel, { observe: 'response' })
         .pipe(
             map((httpResponse: HttpResponse<ApiResponse<any>>) => {
                 if (httpResponse.status === 204) {
@@ -106,7 +108,7 @@ export class AuthService {
   } 
   const refreshModel = new RefreshAccessTokenModel(token,refreshAccessToken);
 
-    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/refresh', refreshModel, { observe: 'response' })
+    return this.http.post<ApiResponse<Token>>(`${this.API}/refresh`, refreshModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200 && httpResponse.body?.data) {

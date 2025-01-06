@@ -2,23 +2,27 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '../../core/api-response/api-response.model';
 import { Observable } from 'rxjs';
-import { TaskType } from '../models/task-type.model';
+import { TaskTypeDetail } from '../models/task-type-detail.model';
 import { PaginatedApiResponse } from '../../core/api-response/api-paginated-response.model';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskTypeService {
+  private readonly API = environment.ApiUrl;
 
 constructor(private http: HttpClient) { }
 
-getTaskTypes(): Observable<PaginatedApiResponse<TaskType>>{
+getTaskTypes(): Observable<PaginatedApiResponse<TaskTypeDetail>>{
 
-  return  this.http.get<PaginatedApiResponse<TaskType>>(`https://localhost:7278/v1/tasktypes`);
+  return  this.http.get<PaginatedApiResponse<TaskTypeDetail>>(`${this.API}/tasktypes`);
 
 }
 
-getTaskTypesById(id: string): Observable<ApiResponse<TaskType>>{
-  return this.http.get<ApiResponse<TaskType>>(`https://localhost:7278/v1/tasktypes/${id}`);
+getTaskTypesById(id: string): Observable<ApiResponse<TaskTypeDetail>>{
+  return this.http.get<ApiResponse<TaskTypeDetail>>(`${this.API}/tasktypes/${id}`);
 }
+
 }
+

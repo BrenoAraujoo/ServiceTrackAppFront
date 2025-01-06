@@ -16,6 +16,10 @@
         <label class="input-text" for="description">Descrição</label>
         <input class="input-custom" id="description" formControlName="description" pInputText type="text" />
       </div>
+      <div class="input-group">
+        <label class="input-text" for="creationDate">creationDate</label>
+        <input class="input-custom" id="creationDate" formControlName="creationDate" pInputText type="datetime" [disabled]="true"/>
+      </div>
     </div>
   </form>
 </div>

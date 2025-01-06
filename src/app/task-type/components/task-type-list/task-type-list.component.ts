@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
 import { TaskTypeService } from '../../services/task-type.service';
-import { TaskType } from '../../models/task-type.model';
+import { TaskTypeDetail } from '../../models/task-type-detail.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class TaskTypeListComponent implements OnInit {
 
   totalTasks: number = 0;
-  tasksTypes: TaskType[] = [];
+  tasksTypes: TaskTypeDetail[] = [];
   currentItem: any = 'Televisao';
 
 
@@ -52,7 +52,7 @@ export class TaskTypeListComponent implements OnInit {
     })
   }
 
-  getTaskTypeStatus(taskType: TaskType) {
+  getTaskTypeStatus(taskType: TaskTypeDetail) {
     return taskType.active ? 'ativo' : 'inativo';
   }
 
