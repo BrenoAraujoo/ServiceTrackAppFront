@@ -1,7 +1,7 @@
-<div class="user-create-container">
+<div class="create-edit-default-container">
     <form [formGroup]="userForm" (keydown.enter)="$event.preventDefault()">
 
-        <div class="user-create-container-header">
+        <div class="create-edit-default-container-header">
             <h3 class="title">Usuário</h3>
             <div>
                 <button *ngIf="!isEditMode" pButton pRipple label="Criar" size="small" (click)="createUser()"></button>

@@ -1,13 +1,13 @@
-<div class="task-type-create-container">
+<div class="create-edit-default-container">
   <form [formGroup]="taskTypeForm">
-    <div class="task-type-create-container-header">
+    <div class="create-edit-default-container-header">
       <h3 class="title">Gerenciar tipos de tarefa</h3>
       <div>
         <button *ngIf="!isEditMode" pButton pRipple label="Criar" size="small" (click)="createTaskType()"></button>
         <button *ngIf="isEditMode" pButton pRipple label="Salvar" size="small" (click)="updateTaskType()"></button>
       </div>
     </div>
-    <div class="flex-container">
+    <div class="default-flex-item-group">
       <div class="input-group">
         <label class="input-text" for="name">Nome <span class="text-danger">*</span></label>
         <input class="input-custom" id="name" formControlName="name" pInputText type="text" required="true" />
@@ -17,8 +17,16 @@
         <input class="input-custom" id="description" formControlName="description" pInputText type="text" />
       </div>
       <div class="input-group">
-        <label class="input-text" for="creationDate">creationDate</label>
-        <input class="input-custom" id="creationDate" formControlName="creationDate" pInputText type="datetime" [disabled]="true"/>
+        <label class="input-text" for="creatorName">Criador</label>
+        <input class="input-custom not-allowed" id="creatorName" formControlName="creatorName" pInputText type="datetime" />
+      </div>
+      <div class="input-group">
+        <label class="input-text" for="creationDate">Data de criação</label>
+        <input class="input-custom not-allowed" id="creationDate" formControlName="creationDate" pInputText type="datetime" />
+      </div>
+      <div class="input-group">
+        <label class="input-text" for="updateDate">Data de atualização</label>
+        <input class="input-custom not-allowed" id="updateDate" formControlName="updateDate" pInputText type="datetime" />
       </div>
     </div>
   </form>

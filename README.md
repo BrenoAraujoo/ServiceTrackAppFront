@@ -8,7 +8,8 @@ Before running the project, you need to create the local environment configurati
 
 1. Copy the example file:
    ```bash
-   cp src/environments/environment.local.example.ts src/environments/environment.development.ts
+   cp src/environments/environment.example.ts src/environments/environment.development.ts
+   cp src/environments/environment.example.ts src/environments/environment.ts
 
 2. Edit the src/environments/environment.development.ts file and fill in the necessary values, such as the API URL.
 

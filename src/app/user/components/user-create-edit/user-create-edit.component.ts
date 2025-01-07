@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
-
 import { UserCreateModel } from '../../models/user-create.model';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SharedModuleModule } from '../../../shared/shared-module/shared-module.module';
-
 import { UserTabDetailsComponent } from '../user-tab-details/user-tab-details.component';
 import { UserTabConfigComponent } from '../user-tab-config/user-tab-config.component';
 import { UserFormService } from '../../services/user-form.service';
@@ -62,13 +59,15 @@ export class UserCreateComponent implements OnInit {
 
       if (this.isEditMode && this.userId) {
         this.userService.getUserById(this.userId).subscribe((response: ApiResponse<User>) => {
-          if (response.isSuccess && response.data != null) {
+          const { isSuccess, data } = response;
+          if (isSuccess && data) {
+            const { name, email, jobPosition, smartPhoneNumber, userRole } = data;
             this.userForm.patchValue({
-              name: response.data.name,
-              email: response.data.email,
-              jobPosition: response.data.jobPosition,
-              smartPhoneNumber: response.data.smartPhoneNumber,
-              userRole: response.data.userRole
+              name,
+              email,
+              jobPosition,
+              smartPhoneNumber,
+              userRole
             })
           }
         });
@@ -79,7 +78,10 @@ export class UserCreateComponent implements OnInit {
   createUser(): void {
 
 
-    if (this.userForm.valid) {
+    if(!this.userForm.valid){
+      this.toastService.showWarnig('Criação de usuário', 'Dados inválidos'); 
+      return;
+    }
 
       const userCreateModel: UserCreateModel = this.userForm.value;
 
@@ -99,11 +101,6 @@ export class UserCreateComponent implements OnInit {
           }
         }
       });
-    }
-    else {
-      this.toastService.showWarnig('Criação de usuário', 'Dados inválidos')
-    }
-
   }
 
   updateUser(): void {
