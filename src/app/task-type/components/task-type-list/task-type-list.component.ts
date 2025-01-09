@@ -15,8 +15,6 @@ export class TaskTypeListComponent implements OnInit {
 
   totalTasks: number = 0;
   tasksTypes: TaskTypeDetail[] = [];
-  currentItem: any = 'Televisao';
-
 
   constructor(
     private taskTypeService: TaskTypeService,
@@ -38,10 +36,12 @@ export class TaskTypeListComponent implements OnInit {
     this.taskTypeService.getTaskTypes().subscribe({
 
      next: (response) => {
-      if(response.isSuccess && response.data != null){
-        console.log(response.data)
-        this.tasksTypes = response.data.entityList;
-        this.totalTasks = response.data?.totalItems;
+
+      const {isSuccess, data} = response;
+      
+      if(isSuccess && data){
+        this.tasksTypes = data.entityList;
+        this.totalTasks = data.totalItems;
       }
 
       },

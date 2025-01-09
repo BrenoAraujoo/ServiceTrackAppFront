@@ -63,14 +63,47 @@ export class TaskTypeCreateEditComponent implements OnInit{
         })
       }
     })
+
   }
 
   createTaskType(): void {
+
     if (!this.taskTypeForm.valid) {
       this.toastService.showWarnig('Criação de tipo de tarefa','Dados inválidos')
       return;
     }
-    const taskType: TaskTypeCreateModel = this.taskTypeForm.value;
+
+    const {name, description} = this.taskTypeForm.value;
+    const taskType: TaskTypeCreateModel = {name, description};
+
+    this.taskTypeService.createTaskType(taskType).subscribe({
+      next: (response) =>{
+
+        const {isSuccess, data} = response;
+        if(isSuccess && data){
+          
+          const taskTypeDetail: TaskTypeDetail = data;
+          
+          this.taskTypeForm.patchValue({
+            creatorId: taskTypeDetail.creatorId,
+            creatorName: taskTypeDetail.creatorName,
+            name: taskTypeDetail.name,
+            description: taskTypeDetail.description,
+            creationDate: taskTypeDetail.creationDate,
+            updateDate: taskTypeDetail.updateDate
+          })
+          this.toastService.showSuccess('Sucesso','Atividade criada com sucesso!');
+        }
+      },
+      error:( err)=>{
+        if(err.error){
+          const errorResponse = err.error;
+          this.toastService.showErro('Erro na criação do tipo de tarefa',`Código: ${errorResponse.code} - Mesagem: ${errorResponse.message}`)
+        }else{
+          this.toastService.showErro('Erro na criação do tipo de tarefa',err);
+        }
+      }
+    })
     console.log(`desc: ${taskType.description}, ${taskType.name}`)
   }
 

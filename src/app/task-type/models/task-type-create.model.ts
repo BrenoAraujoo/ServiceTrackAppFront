@@ -1,4 +1,4 @@
 export interface TaskTypeCreateModel {
-    name: string,
-    description: string | null
+    name: string;
+    description: string | null;
 }

@@ -101,6 +101,12 @@ body {
   /* Espaçamento abaixo do cabeçalho */
 }
 
+/*Table header e Table Data padrão para tabelas*/
+p-table th,
+p-table td {
+    padding: 0.5rem;
+}
+
 .text-danger {
   color: #ff6161;
 }

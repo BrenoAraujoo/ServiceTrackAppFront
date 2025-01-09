@@ -6,27 +6,23 @@ import { Observable } from "rxjs";
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor{
 
-
-
     constructor(private _authService: AuthService) {
-
         
     }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        throw new Error("Method not implemented.");
-
-         /* const authToken = this._authService.getToken();
-
-        // Clone the request and replace the original headers with
+        
+        const authToken = this._authService.getToken();
+        
+        // If the token is not empty, clone the request and replace the original headers with
         // cloned headers, updated with the authorization. 
-        const authReq = req.clone({
-            headers: req.headers.set('Bearer', authToken)
-        });
-
-        // send cloned request with header to the next handler.
+        var authReq = req.clone();
+        if(authToken){
+            authReq = req.clone({
+                headers: req.headers.set('Bearer', authToken)
+            });
+        }
         return next.handle(authReq);
-        */
+       
     }
-    
 
 }
