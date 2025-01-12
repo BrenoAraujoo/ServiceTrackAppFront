@@ -66,9 +66,7 @@ export class UserService {
         map((httpResponse: HttpResponse<ApiResponse<UserUpdateModel>>) => {
           if (httpResponse.status === 204) {
             return {
-              data: httpResponse.body?.data,
-              isSuccess: true,
-              error: undefined
+              isSuccess: true
             }
           } else {
             return {

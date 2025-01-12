@@ -2,7 +2,7 @@
     <div class="default-list-container-header">
         <h3 class="title">Gerenciar tipos de tarefeas</h3>
         <div class="task-type-list-header-button">
-            <button pButton pRipple label="Adicionar" size="small" (click)="createTaskType()"><span>+</span></button>
+            <button pButton pRipple label="Adicionar" size="small" (click)="createTaskType()"></button>
         </div>
     </div>
     <div>
@@ -11,11 +11,11 @@
             sortMode="multiple" selectionMode="single">
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn style="width:50%">Nome <p-sortIcon field="name" /></th>
+                    <th pSortableColumn style="width:30%">Nome <p-sortIcon field="name" /></th>
                     <th pSortableColumn style="width:10%">Ativo <p-sortIcon field="active" /></th>
-                    <th style="width:5%">Editar</th>
-                    <th style="width:5%">Remover</th>
-                    <th style="width:5%">Ativar/Desativar</th>
+                    <th style="width:10%">Editar</th>
+                    <th style="width:10%">Remover</th>
+                    <th style="width:10%">Ativar/Desativar</th>
                 </tr>
             </ng-template>
             <ng-template pTemplate="body" let-taskType>

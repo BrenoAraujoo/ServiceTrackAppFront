@@ -7,6 +7,7 @@ import { PaginatedApiResponse } from '../../core/api-response/api-paginated-resp
 import { environment } from '../../../environments/environment.development';
 import { TaskTypeCreateModel } from '../models/task-type-create.model';
 import { UserCreateModel } from '../../user/models/user-create.model';
+import { TaskTypeUpdateModel } from '../models/task-type-update.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,20 +15,20 @@ import { UserCreateModel } from '../../user/models/user-create.model';
 export class TaskTypeService {
   private readonly API = environment.ApiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   getTaskTypes(): Observable<PaginatedApiResponse<TaskTypeDetail>> {
 
-    return this.http.get<PaginatedApiResponse<TaskTypeDetail>>(`${this.API}/tasktypes`);
+    return this._http.get<PaginatedApiResponse<TaskTypeDetail>>(`${this.API}/tasktypes`);
 
   }
 
   getTaskTypesById(id: string): Observable<ApiResponse<TaskTypeDetail>> {
-    return this.http.get<ApiResponse<TaskTypeDetail>>(`${this.API}/tasktypes/${id}`);
+    return this._http.get<ApiResponse<TaskTypeDetail>>(`${this.API}/tasktypes/${id}`);
   }
 
   createTaskType(taskType: TaskTypeCreateModel): Observable<ApiResponse<TaskTypeDetail>> {
-    return this.http.post<ApiResponse<TaskTypeDetail>>(`${this.API}/tasktypes`, taskType, { observe: 'response' })
+    return this._http.post<ApiResponse<TaskTypeDetail>>(`${this.API}/tasktypes`, taskType, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<TaskTypeDetail>>) => {
           if (httpResponse.status === 201) {
@@ -57,5 +58,34 @@ export class TaskTypeService {
         })
       )
   }
-}
+  
+  updateTaskType(taskType: TaskTypeUpdateModel, taskTypeId: string): Observable<ApiResponse<any>> {
+    return this._http.put<ApiResponse<any>>(`${this.API}/tasktypes/${taskTypeId}`, taskType, { observe: 'response' })
+      .pipe(
+        map((httpResponse: HttpResponse<ApiResponse<any>>) => {
+          if (httpResponse.status === 204) {
+            return {
+              isSuccess: true
+            } as ApiResponse<any>
+          }
+          return {
+            isSuccess: false,
+            erro: httpResponse.body?.error
+          } as ApiResponse<any>
+        }),
+        catchError((error: any) => {
+          const apiError: ApiResponse<any> = {
+            isSuccess: false,
+            error: {
+              code: error.status,
+              message: error.message
+            }
+          }
+          return throwError(() => apiError);
+        })
+      )
+  }
 
+
+
+}

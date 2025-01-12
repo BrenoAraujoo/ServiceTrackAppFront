@@ -138,7 +138,6 @@ export class UserCreateComponent implements OnInit {
               const errorResponse = err.error;
               this.toastService.showErro('Atualização de usuário', `Código: ${errorResponse.code} - Mensagem: ${errorResponse.message}` )
             }
-            
           }
       })
     }else{
