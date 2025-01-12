@@ -3,6 +3,7 @@ import { SharedModuleModule } from '../../../shared/shared-module/shared-module.
 import { TaskTypeService } from '../../services/task-type.service';
 import { TaskTypeDetail } from '../../models/task-type-detail.model';
 import { Router } from '@angular/router';
+import { ToastService } from '../../../shared/toastr-services/toast-service';
 
 @Component({
   selector: 'app-task-type',
@@ -18,7 +19,8 @@ export class TaskTypeListComponent implements OnInit {
 
   constructor(
     private taskTypeService: TaskTypeService,
-     private router: Router) { }
+    private toastService: ToastService,
+    private router: Router) { }
 
   ngOnInit(): void {
 
@@ -32,7 +34,7 @@ export class TaskTypeListComponent implements OnInit {
     this.router.navigate([`/taskType/${taskTypeId}`]);
   }
 
-  getTaskTypes() {
+  getTaskTypes():void {
     this.taskTypeService.getTaskTypes().subscribe({
 
      next: (response) => {
@@ -49,6 +51,26 @@ export class TaskTypeListComponent implements OnInit {
         console.log(err.message)
       }
 
+    })
+  }
+
+  deleteTaskType(taskTypeId: string):void{
+    this.taskTypeService.deleteTaskType(taskTypeId).subscribe({
+      next: (response) => {
+        const isSuccess = response.isSuccess;
+        if(isSuccess){
+          this.toastService.showSuccess('Sucesso na exclusão tipo de tarefa',`Tarefa removida com sucesso!`);
+          this.getTaskTypes();
+        }
+      },
+      error: (err) =>{
+        if(err.error){
+          const errorResponse = err.error;
+          this.toastService.showErro('Erro na exclusão tipo de tarefa',`Código: ${errorResponse.code} - Mesagem: ${errorResponse.message}`)
+        }else{
+          this.toastService.showErro('Erro na exclusão  do tipo de tarefa',err);
+        }
+      }
     })
   }
 

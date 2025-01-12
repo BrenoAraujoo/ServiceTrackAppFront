@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '../../core/api-response/api-response.model';
-import { catchError, map, Observable, throwError } from 'rxjs';
+import { catchError, map, Observable, Observer, throwError } from 'rxjs';
 import { TaskTypeDetail } from '../models/task-type-detail.model';
 import { PaginatedApiResponse } from '../../core/api-response/api-paginated-response.model';
 import { environment } from '../../../environments/environment.development';
@@ -86,6 +86,31 @@ export class TaskTypeService {
       )
   }
 
-
+  deleteTaskType(taskTypeId: string): Observable<ApiResponse<any>> {
+    return this._http.delete<ApiResponse<any>>(`${this.API}/tasktypes/${taskTypeId}`, { observe: 'response' })
+      .pipe(
+        map((httpResponse: HttpResponse<ApiResponse<any>>) => {
+          if (httpResponse.status === 204) {
+            return {
+              isSuccess: true,
+            } as ApiResponse<any>
+          }
+          return {
+            isSuccess: false,
+            error: httpResponse.body?.error
+          }
+        }),
+        catchError((error: any) => {
+          const apiError: ApiResponse<any> = {
+            isSuccess: false,
+            error: {
+              code: error.status,
+              message: error.message
+            }
+          }
+          return throwError(() => apiError);
+        })
+      )
+  }
 
 }
