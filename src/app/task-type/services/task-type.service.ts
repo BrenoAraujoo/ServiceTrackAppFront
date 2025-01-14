@@ -104,13 +104,42 @@ export class TaskTypeService {
           const apiError: ApiResponse<any> = {
             isSuccess: false,
             error: {
-              code: error.status,
-              message: error.message
+              code: error.error.error.code,
+              message: error.error.error.message
             }
           }
           return throwError(() => apiError);
         })
       )
+  }
+
+  changeTaskTypeStatus(taskTypeId: string, status: boolean) : Observable<ApiResponse<any>>{
+    const action = status? 'activate': 'deactivate';
+    return this._http.put<any>(`${this.API}/tasktypes/${taskTypeId}/${action}`,null, {observe: 'response'})
+    .pipe(
+      map((httpResponse: HttpResponse<any>) =>{
+        if(httpResponse.status === 204){
+          return{
+            isSuccess: true
+          } as ApiResponse<any>
+        }else{
+          return {
+            isSuccess: false,
+            error: httpResponse.body?.error
+          }
+        }
+      }),
+      catchError ((error: any) => {
+        const apiError: ApiResponse<any> = {
+          isSuccess: false,
+          error: {
+            code: error.error.error.code,
+            message: error.error.error.message
+          }
+        }
+        return throwError(()=> apiError)
+      })
+    )
   }
 
 }

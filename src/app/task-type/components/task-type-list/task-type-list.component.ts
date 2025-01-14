@@ -4,6 +4,7 @@ import { TaskTypeService } from '../../services/task-type.service';
 import { TaskTypeDetail } from '../../models/task-type-detail.model';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared/toastr-services/toast-service';
+import { ApiResponse } from '../../../core/api-response/api-response.model';
 
 @Component({
   selector: 'app-task-type',
@@ -60,7 +61,7 @@ export class TaskTypeListComponent implements OnInit {
         const isSuccess = response.isSuccess;
         if(isSuccess){
           this.toastService.showSuccess('Sucesso na exclusão tipo de tarefa',`Tarefa removida com sucesso!`);
-          this.getTaskTypes();
+          this.updateTaskTypesList(taskTypeId);
         }
       },
       error: (err) =>{
@@ -73,10 +74,29 @@ export class TaskTypeListComponent implements OnInit {
       }
     })
   }
+  changeTaskTypeStatus(taskTypeId: string, status: boolean) {
+    this.taskTypeService.changeTaskTypeStatus(taskTypeId, status).subscribe({
+      next: (response: ApiResponse<void>) =>{
+        if(response.isSuccess){
+          this.toastService.showSuccess('Alteração de tipo de tarefa', `Tipo de tarefa ${status ? 'ativado' : 'desativado'} com sucesso`)
 
-  getTaskTypeStatus(taskType: TaskTypeDetail) {
-    return taskType.active ? 'ativo' : 'inativo';
+          // Atualiza a lista de tasktype de forma imutável
+          this.tasksTypes = this.tasksTypes.map(tasksType =>
+            tasksType.id === taskTypeId ? { ...tasksType, active: status } : tasksType)
+        }
+      },
+      error: (err: any)=>{
+        this.toastService.showWarnig('Alteração de tipo de tarefa', ` ${err.message}`)
+      }
+    })
   }
 
-
+  getTaskTypeStatus(taskType: TaskTypeDetail) : string {
+    return taskType.active ? 'ativo' : 'inativo';
+  }
+  private updateTaskTypesList(taskTypeId: string): void{
+    const index = this.tasksTypes.findIndex(tasktype => tasktype.id === taskTypeId);
+    if(index !== -1)
+      this.tasksTypes.splice(index,1) // remove pelo indice
+  }
 }

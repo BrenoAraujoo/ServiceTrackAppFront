@@ -12,28 +12,28 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="name" style="width:25%">Nome<p-sortIcon field="name" /></th>
-          <th pSortableColumn="email" style="width:25%">Email<p-sortIcon field="email" /></th>
-          <th pSortableColumn="jobPosition" style="width:25%">Cargo<p-sortIcon field="jobPosition" /></th>
-          <th pSortableColumn="smartPhoneNumber" style="width:10%">Celular<p-sortIcon field="smartPhoneNumber" /></th>
-          <th pSortableColumn="active" style="width:10%">Ativo<p-sortIcon field="active" /></th>
-          <th style="width:5%">Editar</th>
-          <th style="width:5%">Ativar/Desativar</th>
+          <th pSortableColumn="email" style="width:25%" class="content-align-center">Email<p-sortIcon field="email" /></th>
+          <th pSortableColumn="jobPosition" style="width:25%" class="content-align-center">Cargo<p-sortIcon field="jobPosition" /></th>
+          <th pSortableColumn="smartPhoneNumber" style="width:10%" class="content-align-center">Celular<p-sortIcon field="smartPhoneNumber" /></th>
+          <th pSortableColumn="active" style="width:10%" class="content-align-center">Ativo<p-sortIcon field="active" /></th>
+          <th style="width:5%"class="content-align-center">Editar</th>
+          <th style="width:5%"class="content-align-center">Ativar/Desativar</th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-user>
         <tr>
           <td>{{ user.name }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.jobPosition }}</td>
-          <td>{{ user.smartPhoneNumber }}</td>
-          <td>
+          <td class="content-align-center">{{ user.email }}</td>
+          <td class="content-align-center">{{ user.jobPosition }}</td>
+          <td class="content-align-center">{{ user.smartPhoneNumber }}</td>
+          <td class="content-align-center">
             <div [ngClass]="user.active ? 'active' : 'inactive'">{{getUserStatus(user)}}</div>
           </td>
-          <td>
+          <td class="content-align-center">
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-text"
               (click)="viewUser(user.id)"></button>
           </td>
-          <td>
+          <td class="content-align-center">
             <div class="card flex justify-content-center">
             <button *ngIf="user.active" pButton pRipple icon="pi pi-times" title="Desativar"
               class="p-button-rounded p-button-text" (click)="changeUserStatus(user.id, false)" style="color: #ff5858;"></button>
