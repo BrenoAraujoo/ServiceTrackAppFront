@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastService } from '../../../shared/toastr-services/toast-service';
 import { ApiResponse } from '../../../core/api-response/api-response.model';
 
+
 @Component({
   selector: 'app-task-type',
   standalone: true,
@@ -24,8 +25,7 @@ export class TaskTypeListComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-
-    this.getTaskTypes();
+      this.getTaskTypes();
   }
 
   createTaskType(): void{
@@ -36,6 +36,7 @@ export class TaskTypeListComponent implements OnInit {
   }
 
   getTaskTypes():void {
+  
     this.taskTypeService.getTaskTypes().subscribe({
 
      next: (response) => {
@@ -45,11 +46,12 @@ export class TaskTypeListComponent implements OnInit {
       if(isSuccess && data){
         this.tasksTypes = data.entityList;
         this.totalTasks = data.totalItems;
+        this.toastService.showSuccess('Sucesso',`${data.totalItems} tipos de tarefas foram encontradas`);
       }
 
       },
       error: (err) => {
-        console.log(err.message)
+        this.toastService.showErro('Erro',err.message);
       }
 
     })

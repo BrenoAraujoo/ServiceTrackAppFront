@@ -33,9 +33,9 @@ export class AuthService {
           if (httpResponse.status === 200 && httpResponse.body?.data) {
             this.storeToken(httpResponse.body?.data?.accessToken, httpResponse.body?.data?.refreshToken)
             const teste = this.decodeToken();
-            const roles = teste?.roles;
-            roles?.forEach(roles => console.log(roles));
-            console.log(teste?.userId);
+            const role = teste?.role
+            
+
 
             return {
               data: httpResponse.body?.data,
@@ -154,7 +154,7 @@ export class AuthService {
   }
   public getUserRoles(): string[]{
     const decodedToken = this.decodeToken();
-    return decodedToken ? decodedToken.roles : [];
+    return decodedToken ? decodedToken.role : [];
   }
   storeToken(token: string, refreshToken: string): void{
     localStorage.setItem(this.TOKEN_KEY, token)
