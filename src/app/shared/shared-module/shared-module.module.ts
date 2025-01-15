@@ -13,6 +13,7 @@ import { IconFieldModule } from 'primeng/iconfield';
 import { TagModule } from 'primeng/tag';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToggleButtonModule  } from 'primeng/togglebutton';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @NgModule({
   exports: [
@@ -29,7 +30,8 @@ import { ToggleButtonModule  } from 'primeng/togglebutton';
     IconFieldModule,
     TagModule,
     DropdownModule,
-    ToggleButtonModule 
+    ToggleButtonModule,
+    ProgressSpinnerModule
   ]
 })
 export class SharedModuleModule { }

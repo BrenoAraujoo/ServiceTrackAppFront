@@ -1,32 +1,34 @@
 import { Injectable } from "@angular/core";
 import { AuthService } from "../services/auth.service";
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { finalize, Observable } from "rxjs";
+import { LoadingService } from "../services/loading.service";
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor{
+export class AuthInterceptor implements HttpInterceptor {
 
+    constructor(
+        private _authService: AuthService,
+        private _loadingService: LoadingService) { }
 
-
-    constructor(private _authService: AuthService) {
-
-        
-    }
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        throw new Error("Method not implemented.");
 
-         /* const authToken = this._authService.getToken();
+        const authToken = this._authService.getToken();
+        this._loadingService.show();
 
-        // Clone the request and replace the original headers with
+        // If the token is not empty, clone the request and replace the original headers with
         // cloned headers, updated with the authorization. 
-        const authReq = req.clone({
-            headers: req.headers.set('Bearer', authToken)
-        });
+        var authReq = req.clone();
+        if (authToken) {
+            authReq = req.clone({
+                headers: req.headers.set('Bearer', authToken)
+            });
+        }
+        return next.handle(authReq)
+            .pipe(
+                finalize(() => this._loadingService.hide()) // Hides the spinner component
+            );
 
-        // send cloned request with header to the next handler.
-        return next.handle(authReq);
-        */
     }
-    
 
 }

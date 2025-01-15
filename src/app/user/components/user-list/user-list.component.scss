@@ -1,4 +1,5 @@
-.user-list-container {
+
+.default-list-container {
     display: flex;
     flex-direction: column;
     align-items: stretch;
@@ -6,7 +7,7 @@
     /* Adiciona um preenchimento ao redor */
 }
 
-.user-list-container-header {
+.default-list-container-header {
     display: flex;
     justify-content: space-between;
     /* Mantém o título e o botão separados */
@@ -15,6 +16,8 @@
     /* Espaçamento abaixo do cabeçalho */
 
 }
+
+
 
 .card {
     overflow-x: auto;
@@ -26,10 +29,3 @@
     /* Garante que a tabela ocupe toda a largura do contêiner */
 }
 
-.active-user{
-    color: var(--primary-color) // cores do prime ng
-}
-
-.inactive-user{
-    color: var(--bluegray-200) // cores do prime ng
-}

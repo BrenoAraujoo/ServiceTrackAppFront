@@ -48,7 +48,6 @@ export class LoginComponent  implements OnInit{
       this._authService.login(loginModel).subscribe({
         next: (response) => {
           if (response.isSuccess && response.data?.accessToken) {
-            console.log(response.data?.accessToken);
             this._toastService.showSuccess('Sucesso', 'Acesso autorizado')
             this._authService.storeToken(response.data?.accessToken, response.data?.refreshToken)
             this._router.navigate(['/users'])
@@ -75,7 +74,7 @@ export class LoginComponent  implements OnInit{
       this._authService.refreshAccessToken().subscribe({
         next: (response) => {
           if (response.isSuccess && response.data?.accessToken) {
-            this._toastService.showSuccess('refresh login sucesso', response.data?.accessToken)
+            //this._toastService.showSuccess('refresh login sucesso', response.data?.accessToken)
             this._authService.storeToken(response.data?.accessToken, response.data?.refreshToken)
             this._router.navigate(['/users'])
           }

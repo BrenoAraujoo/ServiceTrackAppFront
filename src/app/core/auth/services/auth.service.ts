@@ -1,6 +1,5 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { ApiResponse } from '../../api-response/api-response.model';
 import { Token } from '../models/token.model';
 import { catchError, map, Observable, throwError } from 'rxjs';
@@ -8,6 +7,9 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { LoginModel } from '../../../login/models/login.model';
 import { LogoutModel } from '../models/logout.model';
 import { RefreshAccessTokenModel } from '../models/refreshacesstoken.model';
+import { environment } from '../../../../environments/environment.development';
+import {jwtDecode} from 'jwt-decode';
+import { JwtPayload } from '../models/jwtPayload.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +18,25 @@ export class AuthService {
 
   
   private readonly TOKEN_KEY = 'token';
-  private readonly REFRESH_TOKEN_KEY='refreshToken';
+  private readonly REFRESH_TOKEN_KEY = 'refreshToken';
+  private readonly API = environment.ApiUrl;
+
 
   constructor(private http: HttpClient , private jwtHelper: JwtHelperService) { }
 
 
   login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
 
-    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/login', loginModel, { observe: 'response' })
+    return this.http.post<ApiResponse<Token>>(`${this.API}/login`, loginModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200 && httpResponse.body?.data) {
             this.storeToken(httpResponse.body?.data?.accessToken, httpResponse.body?.data?.refreshToken)
+            const teste = this.decodeToken();
+            const role = teste?.role
+            
+
+
             return {
               data: httpResponse.body?.data,
               isSuccess: true,
@@ -63,7 +72,7 @@ export class AuthService {
     this.removeRefreshToken();
     this.removeToken();
     
-    return this.http.post<ApiResponse<any>>('https://localhost:7278/v1/logout', logoutModel, { observe: 'response' })
+    return this.http.post<ApiResponse<any>>(`${this.API}/logout`, logoutModel, { observe: 'response' })
         .pipe(
             map((httpResponse: HttpResponse<ApiResponse<any>>) => {
                 if (httpResponse.status === 204) {
@@ -106,7 +115,7 @@ export class AuthService {
   } 
   const refreshModel = new RefreshAccessTokenModel(token,refreshAccessToken);
 
-    return this.http.post<ApiResponse<Token>>('https://localhost:7278/v1/refresh', refreshModel, { observe: 'response' })
+    return this.http.post<ApiResponse<Token>>(`${this.API}/refresh`, refreshModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200 && httpResponse.body?.data) {
@@ -139,10 +148,19 @@ export class AuthService {
       )
   }
 
+  private decodeToken(): JwtPayload | null{
+    const token = this.getToken();
+    return token ? jwtDecode<JwtPayload>(token) : null;
+  }
+  public getUserRoles(): string[]{
+    const decodedToken = this.decodeToken();
+    return decodedToken ? decodedToken.role : [];
+  }
   storeToken(token: string, refreshToken: string): void{
     localStorage.setItem(this.TOKEN_KEY, token)
     localStorage.setItem(this.REFRESH_TOKEN_KEY, refreshToken)
   }
+
   getToken(): string | null{
     return localStorage.getItem(this.TOKEN_KEY)
   }
@@ -155,7 +173,7 @@ export class AuthService {
   removeRefreshToken(): void{
     localStorage.removeItem(this.REFRESH_TOKEN_KEY)
   }
-
+  
   isAuthenticated(): boolean {
 
     const token = this.getToken();

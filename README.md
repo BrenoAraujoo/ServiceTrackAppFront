@@ -2,6 +2,17 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
 
+
+### Local environment configuration
+Before running the project, you need to create the local environment configuration file:
+
+1. Copy the example file:
+   ```bash
+   cp src/environments/environment.example.ts src/environments/environment.development.ts
+   cp src/environments/environment.example.ts src/environments/environment.ts
+
+2. Edit the src/environments/environment.development.ts file and fill in the necessary values, such as the API URL.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

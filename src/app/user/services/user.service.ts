@@ -6,11 +6,13 @@ import { User } from '../models/user.model';
 import { UserCreateModel } from '../models/user-create.model';
 import { UserUpdateModel } from '../models/user-update.model';
 import { PaginatedApiResponse } from '../../core/api-response/api-paginated-response.model';
+import { environment } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private readonly API = environment.ApiUrl;
 
   constructor(private http: HttpClient) { }
 
@@ -19,14 +21,14 @@ export class UserService {
     pageNumber = pageNumber?? 1;
     pageSize = pageSize?? 5;
 
-    return this.http.get<PaginatedApiResponse<User>>(`https://localhost:7278/v1/users?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    return this.http.get<PaginatedApiResponse<User>>(`${this.API}/users?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
   getUserById(userId: string): Observable<ApiResponse<User>> {
-    return this.http.get<ApiResponse<User>>(`https://localhost:7278/v1/users/${userId}`)
+    return this.http.get<ApiResponse<User>>(`${this.API}/users/${userId}`)
   }
 
   createUser(user: UserCreateModel): Observable<ApiResponse<UserCreateModel>> {
-    return this.http.post<ApiResponse<UserCreateModel>>('https://localhost:7278/v1/users', user, { observe: 'response' })
+    return this.http.post<ApiResponse<UserCreateModel>>(`${this.API}/users`, user, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<UserCreateModel>>) => {
           if (httpResponse.status === 201) {
@@ -59,14 +61,12 @@ export class UserService {
   
   updateUser (user: UserUpdateModel, userId: string): Observable<ApiResponse<UserUpdateModel>>{
 
-    return this.http.put<ApiResponse<UserUpdateModel>>(`https://localhost:7278/v1/users/${userId}`, user, { observe: 'response' })
+    return this.http.put<ApiResponse<UserUpdateModel>>(`${this.API}/users/${userId}`, user, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<UserUpdateModel>>) => {
           if (httpResponse.status === 204) {
             return {
-              data: httpResponse.body?.data,
-              isSuccess: true,
-              error: undefined
+              isSuccess: true
             }
           } else {
             return {
@@ -94,7 +94,7 @@ export class UserService {
 
   changeUserStatus(userId: string, status: boolean): Observable<ApiResponse<void>> {
     const action = status?'activate':'deactivate';
-    return this.http.put<void>(`https://localhost:7278/v1/users/${userId}/${action}`, null, { observe: 'response' })
+    return this.http.put<void>(`${this.API}/users/${userId}/${action}`, null, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<void>) => {
           // Verifica se a resposta é um código de sucesso
