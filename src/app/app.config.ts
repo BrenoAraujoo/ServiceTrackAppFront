@@ -13,9 +13,7 @@ export const appConfig: ApplicationConfig = {
    [provideZoneChangeDetection({ eventCoalescing: true }),
      provideRouter(routes),
       provideAnimations(),
-      provideHttpClient(
-        withInterceptorsFromDi(),
-      ),
+      provideHttpClient(withInterceptorsFromDi()),
       MessageService,
       {provide: JWT_OPTIONS,useValue:JWT_OPTIONS},
       {provide: HTTP_INTERCEPTORS, useClass : AuthInterceptor, multi: true},
