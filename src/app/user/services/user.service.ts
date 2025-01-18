@@ -14,21 +14,21 @@ import { environment } from '../../../environments/environment.development';
 export class UserService {
   private readonly API = environment.ApiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private _http: HttpClient) { }
 
   getUsers(pageNumber?: number, pageSize?: number): Observable<PaginatedApiResponse<User>> {
 
     pageNumber = pageNumber?? 1;
     pageSize = pageSize?? 5;
 
-    return this.http.get<PaginatedApiResponse<User>>(`${this.API}/users?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+    return this._http.get<PaginatedApiResponse<User>>(`${this.API}/users?pageNumber=${pageNumber}&pageSize=${pageSize}`);
   }
   getUserById(userId: string): Observable<ApiResponse<User>> {
-    return this.http.get<ApiResponse<User>>(`${this.API}/users/${userId}`)
+    return this._http.get<ApiResponse<User>>(`${this.API}/users/${userId}`)
   }
 
   createUser(user: UserCreateModel): Observable<ApiResponse<UserCreateModel>> {
-    return this.http.post<ApiResponse<UserCreateModel>>(`${this.API}/users`, user, { observe: 'response' })
+    return this._http.post<ApiResponse<UserCreateModel>>(`${this.API}/users`, user, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<UserCreateModel>>) => {
           if (httpResponse.status === 201) {
@@ -61,7 +61,7 @@ export class UserService {
   
   updateUser (user: UserUpdateModel, userId: string): Observable<ApiResponse<UserUpdateModel>>{
 
-    return this.http.put<ApiResponse<UserUpdateModel>>(`${this.API}/users/${userId}`, user, { observe: 'response' })
+    return this._http.put<ApiResponse<UserUpdateModel>>(`${this.API}/users/${userId}`, user, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<UserUpdateModel>>) => {
           if (httpResponse.status === 204) {
@@ -94,7 +94,7 @@ export class UserService {
 
   changeUserStatus(userId: string, status: boolean): Observable<ApiResponse<void>> {
     const action = status?'activate':'deactivate';
-    return this.http.put<void>(`${this.API}/users/${userId}/${action}`, null, { observe: 'response' })
+    return this._http.put<void>(`${this.API}/users/${userId}/${action}`, null, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<void>) => {
           // Verifica se a resposta é um código de sucesso

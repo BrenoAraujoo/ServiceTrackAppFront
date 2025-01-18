@@ -5,6 +5,8 @@ import { TaskTypeDetail } from '../../models/task-type-detail.model';
 import { Router } from '@angular/router';
 import { ToastService } from '../../../shared/toastr-services/toast-service';
 import { ApiResponse } from '../../../core/api-response/api-response.model';
+import { GlobalErrorHandlerService } from '../../../core/error/global-error-handler.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -20,24 +22,25 @@ export class TaskTypeListComponent implements OnInit {
   tasksTypes: TaskTypeDetail[] = [];
 
   constructor(
-    private taskTypeService: TaskTypeService,
-    private toastService: ToastService,
-    private router: Router) { }
+    private _taskTypeService: TaskTypeService,
+    private _toastService: ToastService,
+    private _router: Router,
+    private _erroHandlerService: GlobalErrorHandlerService) { }
 
   ngOnInit(): void {
       this.getTaskTypes();
   }
 
   createTaskType(): void{
-  this.router.navigate(['taskType/create'])
+  this._router.navigate(['taskType/create'])
   }
   viewTaskType(taskTypeId: string): void{
-    this.router.navigate([`/taskType/${taskTypeId}`]);
+    this._router.navigate([`/taskType/${taskTypeId}`]);
   }
 
   getTaskTypes():void {
   
-    this.taskTypeService.getTaskTypes().subscribe({
+    this._taskTypeService.getTaskTypes().subscribe({
 
      next: (response) => {
 
@@ -46,49 +49,44 @@ export class TaskTypeListComponent implements OnInit {
       if(isSuccess && data){
         this.tasksTypes = data.entityList;
         this.totalTasks = data.totalItems;
-        this.toastService.showSuccess('Sucesso',`${data.totalItems} tipos de tarefas foram encontradas`);
+        this._toastService.showSuccess('Sucesso',`${data.totalItems} tipos de tarefas foram encontradas`);
       }
 
       },
       error: (err) => {
-        this.toastService.showErro('Erro',err.message);
+        this._erroHandlerService.handleError(err);
       }
 
     })
   }
 
   deleteTaskType(taskTypeId: string):void{
-    this.taskTypeService.deleteTaskType(taskTypeId).subscribe({
+    this._taskTypeService.deleteTaskType(taskTypeId).subscribe({
       next: (response) => {
         const isSuccess = response.isSuccess;
         if(isSuccess){
-          this.toastService.showSuccess('Sucesso na exclusão tipo de tarefa',`Tarefa removida com sucesso!`);
+          this._toastService.showSuccess('Sucesso na exclusão tipo de tarefa',`Tarefa removida com sucesso!`);
           this.updateTaskTypesList(taskTypeId);
         }
       },
-      error: (err) =>{
-        if(err.error){
-          const errorResponse = err.error;
-          this.toastService.showErro('Erro na exclusão tipo de tarefa',`Código: ${errorResponse.code} - Mesagem: ${errorResponse.message}`)
-        }else{
-          this.toastService.showErro('Erro na exclusão  do tipo de tarefa',err);
-        }
+      error: (err: HttpErrorResponse) =>{
+        this._erroHandlerService.handleError(err);
       }
     })
   }
   changeTaskTypeStatus(taskTypeId: string, status: boolean) {
-    this.taskTypeService.changeTaskTypeStatus(taskTypeId, status).subscribe({
+    this._taskTypeService.changeTaskTypeStatus(taskTypeId, status).subscribe({
       next: (response: ApiResponse<void>) =>{
         if(response.isSuccess){
-          this.toastService.showSuccess('Alteração de tipo de tarefa', `Tipo de tarefa ${status ? 'ativado' : 'desativado'} com sucesso`)
+          this._toastService.showSuccess('Alteração de tipo de tarefa', `Tipo de tarefa ${status ? 'ativado' : 'desativado'} com sucesso`)
 
           // Atualiza a lista de tasktype de forma imutável
           this.tasksTypes = this.tasksTypes.map(tasksType =>
             tasksType.id === taskTypeId ? { ...tasksType, active: status } : tasksType)
         }
       },
-      error: (err: any)=>{
-        this.toastService.showWarnig('Alteração de tipo de tarefa', ` ${err.message}`)
+      error: (err: HttpErrorResponse)=>{
+        this._erroHandlerService.handleError(err);
       }
     })
   }

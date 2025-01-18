@@ -1,12 +1,11 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ApiResponse } from '../../core/api-response/api-response.model';
-import { catchError, map, Observable, Observer, throwError } from 'rxjs';
+import { catchError, map, Observable, throwError } from 'rxjs';
 import { TaskTypeDetail } from '../models/task-type-detail.model';
 import { PaginatedApiResponse } from '../../core/api-response/api-paginated-response.model';
 import { environment } from '../../../environments/environment.development';
 import { TaskTypeCreateModel } from '../models/task-type-create.model';
-import { UserCreateModel } from '../../user/models/user-create.model';
 import { TaskTypeUpdateModel } from '../models/task-type-update.model';
 
 @Injectable({
@@ -37,13 +36,12 @@ export class TaskTypeService {
               isSuccess: true,
               error: undefined
             }
-          } else {
+          } 
             return {
               data: undefined,
               isSuccess: false,
               error: httpResponse.body?.error
             }
-          }
         }),
         catchError((error: any) => {
           const apiError: ApiResponse<TaskTypeDetail> = error.error || {

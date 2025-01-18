@@ -1,14 +1,15 @@
-import { Component, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { TaskTypeService } from '../../../services/task-type.service';
 import { ActivatedRoute } from '@angular/router';
-import { ApiResponse } from '../../../../core/api-response/api-response.model';
 import { TaskTypeDetail } from '../../../models/task-type-detail.model';
 import { SharedModuleModule } from '../../../../shared/shared-module/shared-module.module';
 import { ToastService } from '../../../../shared/toastr-services/toast-service';
 import { TaskTypeCreateModel } from '../../../models/task-type-create.model';
 import { TaskTypeUpdateModel } from '../../../models/task-type-update.model';
 import { Subscription } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { GlobalErrorHandlerService } from '../../../../core/error/global-error-handler.service';
 
 @Component({
   selector: 'app-task-type-create-edit',
@@ -23,7 +24,7 @@ export class TaskTypeCreateEditComponent implements OnInit, OnDestroy {
   isEditMode: boolean = false;
   title: string = 'Criar tipo de tarefa';
   taskTypeName: string = '';
-  private subscription: Subscription = new Subscription();
+  private _subscription: Subscription = new Subscription();
 
 
   activeOptions: object[] =
@@ -33,18 +34,24 @@ export class TaskTypeCreateEditComponent implements OnInit, OnDestroy {
     ];
 
   constructor(
-    private fb: FormBuilder,
-    private taskTypeService: TaskTypeService,
-    private route: ActivatedRoute,
-    private toastService: ToastService
+    private _fb: FormBuilder,
+    private _taskTypeService: TaskTypeService,
+    private _route: ActivatedRoute,
+    private _toastService: ToastService,
+    private _erroHandlerService: GlobalErrorHandlerService
   ) { }
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this._subscription.unsubscribe();
   }
 
   ngOnInit() {
+    this.initializeTaskTypeForm();
 
-    this.taskTypeForm = this.fb.group({
+  }
+
+  initializeTaskTypeForm(): void {
+
+    this.taskTypeForm = this._fb.group({
       id: [''],
       creatorId: [''],
       name: ['', Validators.required],
@@ -55,17 +62,22 @@ export class TaskTypeCreateEditComponent implements OnInit, OnDestroy {
       updateDate: new FormControl({ value: '', disabled: true })
     });
 
-    this.subscription.add(
-      this.route.paramMap.subscribe(params => {
+    this._subscription.add(
+      this._route.paramMap.subscribe(params => {
 
         this.taskTypeId = params.get('id');
         this.isEditMode = this.taskTypeId != null;
 
         if (this.isEditMode && this.taskTypeId) {
-          this.taskTypeService.getTaskTypesById(this.taskTypeId).subscribe((response: ApiResponse<TaskTypeDetail>) => {
-            const { isSuccess, data } = response;
-            if (isSuccess && data) {
-              const { id, creatorId, creatorName, name, description, creationDate, updateDate, active } = data;
+          this._taskTypeService.getTaskTypesById(this.taskTypeId).subscribe({
+
+            next: (response) => {
+              const { isSuccess, data, error } = response;
+              if (!isSuccess && error) {
+                this._toastService.showErro('Erro ao carregar tipo de tarefa', error.message);
+                return;
+              }
+              const { id, creatorId, creatorName, name, description, creationDate, updateDate, active } = data!;
               this.taskTypeForm.patchValue({
                 id,
                 creatorId,
@@ -78,6 +90,9 @@ export class TaskTypeCreateEditComponent implements OnInit, OnDestroy {
               })
               this.taskTypeName = name;
               this.title = `Editar tipo de tarefa [${this.taskTypeName}]`
+            },
+            error: (err: HttpErrorResponse) => {
+              this._erroHandlerService.handleError(err);
             }
           })
         }
@@ -87,14 +102,14 @@ export class TaskTypeCreateEditComponent implements OnInit, OnDestroy {
   createTaskType(): void {
 
     if (!this.taskTypeForm.valid) {
-      this.toastService.showWarnig('Criação de tipo de tarefa', 'Dados inválidos')
+      this._toastService.showWarning('Criação de tipo de tarefa', 'Dados inválidos')
       return;
     }
 
     const { name, description } = this.taskTypeForm.value;
     const taskType: TaskTypeCreateModel = { name, description };
-    this.subscription.add(
-      this.taskTypeService.createTaskType(taskType).subscribe({
+    this._subscription.add(
+      this._taskTypeService.createTaskType(taskType).subscribe({
         next: (response) => {
 
           const { isSuccess, data } = response;
@@ -111,16 +126,11 @@ export class TaskTypeCreateEditComponent implements OnInit, OnDestroy {
               updateDate: taskTypeDetail.updateDate
             })
             this.taskTypeName = taskType.name;
-            this.toastService.showSuccess('Sucesso', 'Atividade criada com sucesso!');
+            this._toastService.showSuccess('Sucesso', 'Atividade criada com sucesso!');
           }
         },
-        error: (err) => {
-          if (err.error) {
-            const errorResponse = err.error;
-            this.toastService.showErro('Erro na criação do tipo de tarefa', `Código: ${errorResponse.code} - Mesagem: ${errorResponse.message}`)
-          } else {
-            this.toastService.showErro('Erro na criação do tipo de tarefa', err.detail);
-          }
+        error: (err: HttpErrorResponse) => {
+          this._erroHandlerService.handleError(err);
         }
       }))
   }
@@ -128,29 +138,24 @@ export class TaskTypeCreateEditComponent implements OnInit, OnDestroy {
   updateTaskType(): void {
 
     if (!this.taskTypeForm.valid) {
-      this.toastService.showWarnig('Erro na atualização de tipo de tarefa', 'Dados inválidos')
+      this._toastService.showWarning('Erro na atualização de tipo de tarefa', 'Dados inválidos')
       return;
     }
 
     const { name, description, active } = this.taskTypeForm.value;
     const taskTypeUpdateModel: TaskTypeUpdateModel = { name, description, active };
 
-    this.subscription.add(
-      this.taskTypeService.updateTaskType(taskTypeUpdateModel, this.taskTypeId!).subscribe({
+    this._subscription.add(
+      this._taskTypeService.updateTaskType(taskTypeUpdateModel, this.taskTypeId!).subscribe({
         next: (response) => {
           if (response.isSuccess) {
-            this.toastService.showSuccess('Atualização de tipo de tarefa', 'Tarefa atualizada com sucesso!')
+            this._toastService.showSuccess('Atualização de tipo de tarefa', 'Tarefa atualizada com sucesso!')
           } else {
-            this.toastService.showErro('Erro atualização de tipo de tarefa', 'Não foi possível atualizar a tarefa')
+            this._toastService.showErro('Erro atualização de tipo de tarefa', 'Não foi possível atualizar a tarefa')
           }
         },
         error: (err) => {
-          if (err.error) {
-            const errorResponse = err.error;
-            this.toastService.showErro('Erro na criação do tipo de tarefa', `Código: ${errorResponse.code} - Mesagem: ${errorResponse.message}`)
-          } else {
-            this.toastService.showErro('Erro na criação do tipo de tarefa', err);
-          }
+          this._erroHandlerService.handleError(err);
         }
       }))
   }

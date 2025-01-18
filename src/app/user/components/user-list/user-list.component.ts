@@ -5,9 +5,9 @@ import { SharedModuleModule } from '../../../shared/shared-module/shared-module.
 import { User } from '../../models/user.model';
 import { ApiResponse } from '../../../core/api-response/api-response.model';
 import { ToastService } from '../../../shared/toastr-services/toast-service';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
-import { PaginatedApiResponse } from '../../../core/api-response/api-paginated-response.model';
+import { GlobalErrorHandlerService } from '../../../core/error/global-error-handler.service';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -25,7 +25,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   constructor(
     private userService: UserService,
     private router: Router,
-    private toastService: ToastService) { }
+    private toastService: ToastService,
+    private erroHandlerService: GlobalErrorHandlerService) { }
 
   ngOnInit(): void {
 
@@ -69,7 +70,7 @@ export class UserListComponent implements OnInit, OnDestroy {
           }
         },
         error: (err) => {
-          this.toastService.showWarnig('Alteração de usuário', ` ${err.message}`)
+          this.erroHandlerService.handleError(err);
         }
       }));
   }
@@ -87,7 +88,7 @@ export class UserListComponent implements OnInit, OnDestroy {
           }
         },
         error: (err: HttpErrorResponse) => {
-          this.toastService.showErro('Erro ao obter os usuários', err.message)
+          this.erroHandlerService.handleError(err);
         }
       })
     )
