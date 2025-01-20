@@ -20,7 +20,7 @@ export class ToastService{
         this.messageService.add({severity: 'info', summary, detail, life: 5000})
     }
 
-    showWarnig(summary: string, detail: string){
+    showWarning(summary: string, detail: string){
         this.messageService.add({severity: 'warn', summary,  detail, life: 5000})
     }
 }

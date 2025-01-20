@@ -22,33 +22,29 @@ export class AuthService {
   private readonly API = environment.ApiUrl;
 
 
-  constructor(private http: HttpClient , private jwtHelper: JwtHelperService) { }
+  constructor(private _http: HttpClient , private _jwtHelper: JwtHelperService) { }
 
 
   login(loginModel: LoginModel): Observable<ApiResponse<Token>> {
 
-    return this.http.post<ApiResponse<Token>>(`${this.API}/login`, loginModel, { observe: 'response' })
+    return this._http.post<ApiResponse<Token>>(`${this.API}/login`, loginModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200 && httpResponse.body?.data) {
             this.storeToken(httpResponse.body?.data?.accessToken, httpResponse.body?.data?.refreshToken)
             const teste = this.decodeToken();
             const role = teste?.role
-            
-
-
             return {
               data: httpResponse.body?.data,
               isSuccess: true,
               error: undefined
             }
-          } else {
+          } 
             return {
               data: undefined,
               isSuccess: false,
               error: httpResponse.body?.error
             }
-          }
         }),
         catchError((error: any) => {
           const apiError: ApiResponse<Token> = error.error || {
@@ -72,17 +68,19 @@ export class AuthService {
     this.removeRefreshToken();
     this.removeToken();
     
-    return this.http.post<ApiResponse<any>>(`${this.API}/logout`, logoutModel, { observe: 'response' })
+    return this._http.post<ApiResponse<any>>(`${this.API}/logout`, logoutModel, { observe: 'response' })
         .pipe(
             map((httpResponse: HttpResponse<ApiResponse<any>>) => {
                 if (httpResponse.status === 204) {
-
+                  return {
+                    data: undefined,
+                    isSuccess: true,
+                    error: undefined
+                } as ApiResponse<any>;
                 }
                 return {
-                    data: undefined,
-                    isSuccess: httpResponse.status === 204,
-                    error: undefined
-                };
+                    isSuccess: false
+                } as ApiResponse<any>
             }),
             catchError((error: any) => {
                 const apiError: ApiResponse<any> = {
@@ -115,7 +113,7 @@ export class AuthService {
   } 
   const refreshModel = new RefreshAccessTokenModel(token,refreshAccessToken);
 
-    return this.http.post<ApiResponse<Token>>(`${this.API}/refresh`, refreshModel, { observe: 'response' })
+    return this._http.post<ApiResponse<Token>>(`${this.API}/refresh`, refreshModel, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<Token>>) => {
           if (httpResponse.status === 200 && httpResponse.body?.data) {
@@ -124,14 +122,13 @@ export class AuthService {
               data: httpResponse.body?.data,
               isSuccess: true,
               error: undefined
-            }
-          } else {
+            } as ApiResponse<Token>
+          } 
             return {
               data: undefined,
               isSuccess: false,
               error: httpResponse.body?.error
-            }
-          }
+          } as ApiResponse<Token>
         }),
         catchError((error: any) => {
           const apiError: ApiResponse<Token> = error.error || {
@@ -177,7 +174,7 @@ export class AuthService {
   isAuthenticated(): boolean {
 
     const token = this.getToken();
-    const isTokenExpired = this.jwtHelper.isTokenExpired(token);
+    const isTokenExpired = this._jwtHelper.isTokenExpired(token);
     return token != '' && !isTokenExpired;
   }
     
