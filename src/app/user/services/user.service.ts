@@ -1,4 +1,4 @@
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of, map, throwError } from 'rxjs';
 import { ApiResponse } from '../../core/api-response/api-response.model';
@@ -31,99 +31,56 @@ export class UserService {
     return this._http.post<ApiResponse<UserCreateModel>>(`${this.API}/users`, user, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<UserCreateModel>>) => {
-          if (httpResponse.status === 201) {
             return {
+              isSuccess: httpResponse.status === 201,
               data: httpResponse.body?.data,
-              isSuccess: true,
-              error: undefined
+              error: httpResponse.status !== 204 ? {
+                code: httpResponse.status,
+                message: 'Resposta inesperada da API'
+              } : undefined
             }
-          } else {
-            return {
-              data: undefined,
-              isSuccess: false,
-              error: httpResponse.body?.error
-            }
-          }
         }),
         catchError((error: any) => {
-          const apiError: ApiResponse<UserCreateModel> = error. error || {
-            data: undefined,
-            isSuccess: false,
-            error: {
-              code: error.status,
-              message: error.message
-            }
-          }
-          return throwError(() => apiError);
+          return throwError(() => error);
         })
       );
   }
   
   updateUser (user: UserUpdateModel, userId: string): Observable<ApiResponse<UserUpdateModel>>{
-
     return this._http.put<ApiResponse<UserUpdateModel>>(`${this.API}/users/${userId}`, user, { observe: 'response' })
       .pipe(
         map((httpResponse: HttpResponse<ApiResponse<UserUpdateModel>>) => {
-          if (httpResponse.status === 204) {
             return {
-              isSuccess: true
-            }
-          } else {
-            return {
+              isSuccess: httpResponse.status === 204,
               data: undefined,
-              isSuccess: false,
-              error: httpResponse.body?.error
+              error: httpResponse.status !== 204 ? {
+                code: httpResponse.status,
+                message: 'Resposta inesperada da API'
+              } : undefined
             }
-          }
         }),
         catchError((error: any) => {
-          const apiError: ApiResponse<UserCreateModel> = error. error || {
-            data: undefined,
-            isSuccess: false,
-            error: {
-              code: error.status,
-              message: error.message
-            }
-          }
-          return throwError(() => apiError);
+          return throwError(() => error);
         })
       );
-
   }
     
 
   changeUserStatus(userId: string, status: boolean): Observable<ApiResponse<void>> {
-    const action = status?'activate':'deactivate';
+    const action = status ? 'activate' : 'deactivate';
+  
     return this._http.put<void>(`${this.API}/users/${userId}/${action}`, null, { observe: 'response' })
       .pipe(
-        map((httpResponse: HttpResponse<void>) => {
-          // Verifica se a resposta é um código de sucesso
-          if (httpResponse.status === 204) {
-            return {
-              data: undefined,
-              isSuccess: true,
-              error: undefined,
-            };
-          } else {
-            return {
-              data: undefined,
-              isSuccess: false,
-              error: {
-                code: httpResponse.status,
-                message: 'Resposta inesperada da API'
-              },
-            };
-          }
-        }),
-        catchError((error: any) => {
-          // Trata os erros da API
-          const apiError: ApiResponse<void> = error.error || {
-            isSuccess: false,
-            error: {
-              code: error.status,
-              message: error.message
-            },
-          };
+        map((httpResponse: HttpResponse<void>) => ({
+          isSuccess: httpResponse.status === 204,
+          data: undefined,
+          error: httpResponse.status !== 204 ? {
+            code: httpResponse.status,
+            message: 'Resposta inesperada da API'
+          } : undefined
+        })),
+        catchError((error: HttpErrorResponse) => {
+         const apiError = error;
           return throwError(() => apiError);
         })
       );

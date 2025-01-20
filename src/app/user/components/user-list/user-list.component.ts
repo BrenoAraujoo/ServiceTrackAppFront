@@ -87,7 +87,7 @@ export class UserListComponent implements OnInit, OnDestroy {
             this.totalUsers = response.data?.totalItems;
           }
         },
-        error: (err: HttpErrorResponse) => {
+        error: (err) => {
           this.erroHandlerService.handleError(err);
         }
       })

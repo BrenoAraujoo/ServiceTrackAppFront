@@ -69,11 +69,12 @@ export class TaskTypeListComponent implements OnInit {
           this.updateTaskTypesList(taskTypeId);
         }
       },
-      error: (err: HttpErrorResponse) =>{
+      error: (err) =>{
         this._erroHandlerService.handleError(err);
       }
     })
   }
+  
   changeTaskTypeStatus(taskTypeId: string, status: boolean) {
     this._taskTypeService.changeTaskTypeStatus(taskTypeId, status).subscribe({
       next: (response: ApiResponse<void>) =>{
@@ -85,7 +86,7 @@ export class TaskTypeListComponent implements OnInit {
             tasksType.id === taskTypeId ? { ...tasksType, active: status } : tasksType)
         }
       },
-      error: (err: HttpErrorResponse)=>{
+      error: (err)=>{
         this._erroHandlerService.handleError(err);
       }
     })

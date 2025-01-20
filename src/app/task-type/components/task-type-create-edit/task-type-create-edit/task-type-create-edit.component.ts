@@ -129,7 +129,7 @@ export class TaskTypeCreateEditComponent implements OnInit, OnDestroy {
             this._toastService.showSuccess('Sucesso', 'Atividade criada com sucesso!');
           }
         },
-        error: (err: HttpErrorResponse) => {
+        error: (err) => {
           this._erroHandlerService.handleError(err);
         }
       }))

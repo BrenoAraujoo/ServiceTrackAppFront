@@ -42,9 +42,13 @@ export class LoginComponent  implements OnInit{
 
   login():void {
 
-    if (this.loginForm.valid) {
-      const loginModel: LoginModel = this.loginForm.value;
 
+      if(!this.loginForm.valid){
+        this._toastService.showErro('erro', 'Formulario login invalido');
+        return;
+      }
+      
+      const loginModel: LoginModel = this.loginForm.value;
       this._authService.login(loginModel).subscribe({
         next: (response) => {
           if (response.isSuccess && response.data?.accessToken) {
@@ -61,11 +65,8 @@ export class LoginComponent  implements OnInit{
           }
         }
       });
-    }
-    else{
-      this._toastService.showErro('erro', 'Formulario login invalido');
-    }
-
+    
+  
   }
 
   refresh():void {
