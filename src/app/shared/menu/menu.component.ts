@@ -25,7 +25,10 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: 'Agenda',
-            icon: 'pi pi-book'
+            icon: 'pi pi-book',
+            command: ()=>{
+              this.router.navigate(['/calendar']).then(() => this.sideBarSerivce.closeSidebar())
+            }
           }
         ]
       },

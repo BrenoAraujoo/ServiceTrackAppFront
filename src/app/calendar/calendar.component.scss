@@ -1,0 +1,75 @@
+/* Botões da barra de ferramentas */
+::ng-deep .fc-toolbar .fc-button {
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    transition: background-color 0.5s ease;
+    /* Adiciona uma transição suave */
+}
+
+/* Botões da barra de ferramentas - Primários */
+::ng-deep .fc-toolbar .fc-button.fc-button-primary {
+    background-color: var(--primary-color);
+    color: #fff;
+}
+
+::ng-deep .fc-toolbar .fc-button.fc-button-primary:hover {
+    background-color: var(--bluegray-200) !important;
+}
+
+::ng-deep .fc-toolbar .fc-button.fc-button-primary:active,
+::ng-deep .fc-toolbar .fc-button.fc-button-active {
+    background-color: var(--bluegray-100) !important;
+    /* Fundo cinza quando o botão está ativo */
+    // color: #000; /* Cor do texto quando o botão está ativo */
+    box-shadow: none;
+}
+
+/* Cor dos títulos dos dias */
+::ng-deep .fc .fc-col-header-cell {
+    color: var(--primary-color); /* Cor personalizada */
+}
+
+/* Cor do texto dos dias dentro das células */
+::ng-deep .fc .fc-daygrid-day-top {
+    color: var(--primary-color); /* Cor personalizada */
+    font-weight: bold;
+}
+
+/* Título principal / Data selecionada */
+::ng-deep .fc-toolbar-title {
+    color: var(--primary-color);
+}
+
+/* Container do título do evento */
+::ng-deep .fc-event-title-container {
+    color: var(--primary-color);
+    background-color: var(--teal-100);
+    border: none;
+    /* Remove qualquer borda */
+    outline: none;
+    /* Remove qualquer linha de contorno */
+    box-shadow: none;
+    /* Remove qualquer sombra */
+}
+
+::ng-deep .fc-event-title-container:hover {
+    background-color: var(--bluegray-100); // cor da borda cinza
+    border: none;
+    /* Remove qualquer borda ao passar o mouse */
+    outline: none;
+    /* Remove qualquer linha de contorno ao passar o mouse */
+    box-shadow: none;
+    /* Remove qualquer sombra ao passar o mouse */
+}
+
+/* Eventos em bloco */
+::ng-deep .fc-daygrid-block-event {
+    border-color: var(--teal-100);
+}
+
+::ng-deep .fc-daygrid-block-event:hover {
+    border-color: var(--bluegray-100); // cor da borda cinza
+}
