@@ -8,6 +8,7 @@ import { CanActivate } from '@angular/router';
 import { AuthGuard } from './core/auth/guards/AuthGuard.guard';
 import { TaskTypeListComponent } from './task-type/components/task-type-list/task-type-list.component';
 import { TaskTypeCreateEditComponent } from './task-type/components/task-type-create-edit/task-type-create-edit/task-type-create-edit.component';
+import { TaskListComponent } from '../task/components/task-list/task-list.component';
 
 /**
  * O Angular processa as rotas de acordo com a ordem
@@ -43,6 +44,10 @@ export const routes: Routes = [
     {
         path: 'taskType/:id',
          component: TaskTypeCreateEditComponent
+    },
+    {
+        path: 'task',
+         component: TaskListComponent
     },
     {
         path: '**',
