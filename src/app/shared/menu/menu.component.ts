@@ -20,6 +20,15 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.items = [
+      { 
+        label: 'Agenda',
+        items: [
+          {
+            label: 'Agenda',
+            icon: 'pi pi-book'
+          }
+        ]
+      },
       {
         label: 'Cadastros',
         items: [
@@ -27,13 +36,6 @@ export class MenuComponent implements OnInit {
             label: 'Usuários',
             icon: 'pi pi-user-plus',
             command: () => this.router.navigate(['/users']).then(() => {
-              this.sideBarSerivce.closeSidebar();
-            })
-          },
-          {
-            label: 'Tarefas',
-            icon: 'pi pi-wrench',
-            command: () => this.router.navigate(['users/1']).then(() => {
               this.sideBarSerivce.closeSidebar();
             })
           },
@@ -51,7 +53,10 @@ export class MenuComponent implements OnInit {
         items: [
           {
             label: 'Tarefas',
-            icon: 'pi-receipt'
+            icon: 'pi pi-list-check',
+            command: () => this.router.navigate(['/task']).then(() => {
+              this.sideBarSerivce.closeSidebar();
+            })
           }
         ]
       },
@@ -72,7 +77,6 @@ export class MenuComponent implements OnInit {
           }
         ]
       }
-
     ];
   }
 }

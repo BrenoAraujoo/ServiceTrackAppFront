@@ -1,0 +1,15 @@
+<div class="card">
+    <p-fileUpload name="demo[]" url="https://www.primefaces.org/cdn/api/upload.php" (onUpload)="onUpload($event)" accept="image/*" maxFileSize="1000000" mode="advanced">
+        <ng-template #empty>
+            <div>Drag and drop files to here to upload.</div>
+        </ng-template>
+        <ng-template #content>
+            <ul *ngIf="uploadedFiles.length">
+                <li *ngFor="let file of uploadedFiles">{{ file.name }} - {{ file.size }} bytes</li>
+            </ul>
+        </ng-template>
+    </p-fileUpload>
+</div>
+<div>
+  <img src="https://servicetrackappdev.blob.core.windows.net/taskimages/e55c947a-611f-46cf-955d-99963d89ff8b-azure.png?sv=2025-01-05&se=2025-01-20T22%3A27%3A44Z&sr=b&sp=r&sig=9HTRvZl4RKbLhLVCVAFlxP7oYKuybFqBuWyO956DbBM%3D">
+</div>
