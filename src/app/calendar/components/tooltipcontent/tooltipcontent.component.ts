@@ -1,4 +1,4 @@
-import { Component, inject, Inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tooltipcontent',
@@ -6,12 +6,15 @@ import { Component, inject, Inject, OnInit } from '@angular/core';
   styleUrls: ['./tooltipcontent.component.scss'],
   template:`<div>Conteúdo do Tooltip</div>`
 })
-export class TooltipcontentComponent implements OnInit {
+export class TooltipcontentComponent {
+
+
+  @Input() taskType!: string;
+  @Input() description!: string;
+  @Input() creationDate!: Date;
 
 
   constructor() { }
 
-  ngOnInit() {
-  }
 
 }

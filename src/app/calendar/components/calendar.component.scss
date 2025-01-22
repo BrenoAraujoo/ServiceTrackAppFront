@@ -77,7 +77,35 @@
     border-color: var(--teal-100);
 }
 
-/* Defina uma altura mínima para o container que contém os dias */
+
+/*Tamanho do ponto indicador*/
+::ng-deep .fc-daygrid-event-dot{
+    
+    width: 10px; /* Aumenta a largura */
+    height: 10px; /* Aumenta a altura */
+    border-radius: 50%; /* Mantém o ponto redondo */
+    border-width: 2px; /* Espessura da borda */
+}
+
+/* Cor do ponto indicador para evento urgente */
+::ng-deep .urgent-event {
+    border-color: red;
+    background-color: red;
+}
+
+/* Cor do ponto indicador para tarefa comum */
+::ng-deep .common-task {
+    border-color: blue;
+    background-color:blue;
+}
+
+/* Cor do ponto indicador para baixa prioridade */
+::ng-deep .low-priority {
+    border-color: gray;
+    background-color: gray;
+}
+
+/* Altura mínima para o container que contém os dias */
 ::ng-deep .fc .fc-daygrid-day-frame {
     min-height: 150px !important;
 }

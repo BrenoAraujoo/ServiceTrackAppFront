@@ -1,4 +1,4 @@
-import { inject, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserListComponent } from './user/components/user-list/user-list.component';
 import { UserCreateComponent } from './user/components/user-create-edit/user-create-edit.component';
@@ -7,7 +7,7 @@ import { AuthGuard } from './core/auth/guards/AuthGuard.guard';
 import { TaskTypeListComponent } from './task-type/components/task-type-list/task-type-list.component';
 import { TaskTypeCreateEditComponent } from './task-type/components/task-type-create-edit/task-type-create-edit/task-type-create-edit.component';
 import { TaskListComponent } from '../task/components/task-list/task-list.component';
-import { CalendarComponent } from './calendar/calendar.component';
+import { CalendarComponent } from './calendar/components/calendar.component';
 
 /**
  * O Angular processa as rotas de acordo com a ordem
