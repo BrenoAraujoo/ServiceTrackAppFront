@@ -1,109 +1,105 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import { CalendarOptions, EventApi, EventClickArg, EventDropArg, EventHoveringArg } from '@fullcalendar/core';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction';
-import tippy from 'tippy.js';
+import dayGridPlugin from '@fullcalendar/daygrid'; // Plugin de exibição mensal
+import { CalendarOptions, EventClickArg, EventDropArg, EventHoveringArg } from '@fullcalendar/core';
+import { FullCalendarModule } from '@fullcalendar/angular'; // Módulo principal do FullCalendar
+import interactionPlugin, { DateClickArg } from '@fullcalendar/interaction'; // Plugin de interação (cliques, arrastar, etc.)
+import tippy from 'tippy.js'; // Biblioteca para tooltips
+import { TooltipcontentComponent } from './tooltipcontent/tooltipcontent.component'; // Componente customizado do tooltip
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
-  standalone: true,
-  imports: [FullCalendarModule, CommonModule]
+  standalone: true, // Indica que este componente pode ser usado sem um módulo Angular explícito
+  imports: [FullCalendarModule, CommonModule], // Módulos necessários
 })
-export class CalendarComponent implements OnInit{
+export class CalendarComponent {
+  /**
+   * Referência para o container de tooltips no DOM.
+   * O elemento com `#tooltipContainer` no template será injetado aqui.
+   */
+  @ViewChild('tooltipContainer', { read: ViewContainerRef })
+  tooltipContainer!: ViewContainerRef;
 
-
+  /**
+   * Configurações do FullCalendar.
+   */
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-    dayMaxEvents:5,
+    dayMaxEvents: 5, 
     height: 'auto',
-    locale: 'pt-br',
-    themeSystem: 'custom',
-    plugins: [dayGridPlugin, interactionPlugin],
-    dateClick: (arg) => this.handleDateClick(arg),
-    eventMouseEnter: (arg) => this.eventMouseEnter(arg),
-    eventDisplay:'list-item', // Exibe o evento com um ponto
-    eventClick: this.handleEventClick.bind(this), 
-    eventDrop: this.handleEventDrop.bind(this),
+    locale: 'pt-br', 
+    themeSystem: 'custom', 
+    plugins: [dayGridPlugin, interactionPlugin], 
+    editable: true,
+    droppable: true, 
+    eventDisplay: 'list-item', // Eventos exibidos como itens de lista (com ponto marcador)
     moreLinkContent: 'Ver mais',
-    eventDidMount: this.addTooltip.bind(this),
-    headerToolbar:
-    {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,dayGridWeek,dayGridDay'
-
+    events: [
+      // Lista de eventos pré-carregados
+      { title: 'event 1', date: '2025-01-21', description: 'descricao 1' },
+      { title: 'event 2', date: '2025-01-21', description: 'descricao 2' },
+      { title: 'event 3', date: '2025-01-21', description: 'descricao 3' },
+    ],
+    // Configurações da barra de navegação
+    headerToolbar: {
+      left: 'prev,next today', // Botões à esquerda
+      center: 'title', // Título no centro
+      right: 'dayGridMonth,dayGridWeek,dayGridDay', // Botões à direita
     },
     buttonText: {
+      // Texto dos botões
       today: 'Hoje',
       month: 'Mês',
       week: 'Semana',
-      day: 'Dia'
+      day: 'Dia',
     },
-    eventHint:'sim',
-    editable: true,
-    droppable: true,
-    events: [
-      { title: 'event 1', date: '2025-01-21' , description: 'descricao 1'},
-      { title: 'event 1', date: '2025-01-21' , description: 'descricao 1'},
-      { title: 'event 1', date: '2025-01-21' , description: 'descricao 1'},
-      { title: 'event 1', date: '2025-01-21' , description: 'descricao 1'},
-      { title: 'event 1', date: '2025-01-21' , description: 'descricao 1'},
-      { title: 'event 1', date: '2025-01-21' , description: 'descricao 1'},
-      { title: 'event 1', date: '2025-01-21' , description: 'descricao 1'},
-      { title: 'event 1', date: '2025-01-21' , description: 'descricao 1'},
-
-    ]
+    dateClick: (arg) => this.handleDateClick(arg),
+    eventMouseEnter: (arg) => this.eventMouseEnter(arg), 
+    eventClick: this.handleEventClick.bind(this), 
+    eventDrop: this.handleEventDrop.bind(this), 
+    eventDidMount: this.addTooltip.bind(this), // Monta os tooltips nos eventos
   };
 
 
-  constructor() { }
-
-  ngOnInit() {
+  handleDateClick(arg: DateClickArg): void {
+    console.log('Data clicada:', arg.dateStr);
   }
 
 
-  handleDateClick(arg: DateClickArg) {   
-    alert('criar novo evento?')
-    console.log('date click! ' + arg.dateStr)
-  }
-  eventMouseEnter(arg: EventHoveringArg) {
-    console.log('hover ' + arg.event);
+  eventMouseEnter(arg: EventHoveringArg): void {
+    console.log('Mouse sobre o evento:', arg.event.title);
   }
 
+ 
   handleEventClick(clickInfo: EventClickArg): void {
-    console.log('Evento: ' + clickInfo.event.title + '\nData: ' + clickInfo.event.start);
+    console.log('Evento clicado:', clickInfo.event.title);
+    console.log('Data do evento:', clickInfo.event.start);
   }
+
   handleEventDrop(dropInfo: EventDropArg): void {
-    console.log('Evento movido para: ' + dropInfo.event.start);
+    console.log('Evento movido para:', dropInfo.event.start);
   }
 
 
+  addTooltip(info: any): void {
+    // Cria uma instância do componente do tooltip dinamicamente
+    const componentRef = this.tooltipContainer.createComponent(TooltipcontentComponent);
 
-  addTooltip(info: any) {
-
-    const tooltipContent = `
-    <div class="custom-tooltip">
-      <p><span class="icon">&#x1F7E1;</span> <strong>Status:</strong> Finalizada com Pendência</p>
-      <p><span class="icon">&#x1F4CB;</span> <strong>Tipo de tarefa:</strong> Serviços de Montagem Haix</p>
-      <p><span class="icon">&#x1F464;</span> <strong>Cliente:</strong> 046668-REBOUCAS 1700 EMPREENDIMENTOS SPE LTDA</p>
-      <p><span class="icon">&#x1F4CD;</span> <strong>Endereço:</strong> Rua Lisboa,45-PINHEIROS-SÃO PAULO,SP</p>
-      <p><span class="icon">&#x1F468;</span> <strong>Colaborador:</strong> Rodrigo Ferreira de Lima</p>
-    </div>
-  `;
-
-
+    // Configura o tooltip usando Tippy.js
     tippy(info.el, {
-      content: tooltipContent,
-      theme: 'light',
-      animation: 'scale',
-      duration: [1000, 0],
-      placement: 'right', // Posição do tooltip
-      arrow: true,
-      allowHTML: true
+      content: componentRef.location.nativeElement, // Usa o elemento do componente como conteúdo
+      theme: 'light', 
+      animation: 'scale', 
+      duration: [1000, 0], 
+      placement: 'right', 
+      arrow: true, 
+      allowHTML: true, // Permite HTML no conteúdo do tooltip
     });
   }
 }
