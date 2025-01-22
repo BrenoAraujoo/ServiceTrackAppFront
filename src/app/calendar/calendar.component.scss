@@ -29,12 +29,13 @@
 
 /* Cor dos títulos dos dias */
 ::ng-deep .fc .fc-col-header-cell {
-    color: var(--primary-color); /* Cor personalizada */
+    color: var(--primary-color);
+    background-color: var(--gray-100);
 }
 
 /* Cor do texto dos dias dentro das células */
 ::ng-deep .fc .fc-daygrid-day-top {
-    color: var(--primary-color); /* Cor personalizada */
+    color: var(--primary-color);
     font-weight: bold;
 }
 
@@ -76,6 +77,25 @@
     border-color: var(--teal-100);
 }
 
+/* Defina uma altura mínima para o container que contém os dias */
+::ng-deep .fc .fc-daygrid-day-frame {
+    min-height: 150px !important;
+}
 ::ng-deep .fc-daygrid-block-event:hover {
     border-color: var(--bluegray-100); // cor da borda cinza
 }
+
+
+//ToolTip
+
+/* Customização do tema 'light' */
+// ::ng-deep .tippy-box[data-theme~='light'] {
+//     background-color: #ffffff; 
+//     color: #333;
+//     border-radius: 4px; 
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+//     width: 300px;
+//   }
+//   ::ng-deep .tippy-box[data-theme~='light'] .tippy-arrow {
+//     color: #ffffff; /* Cor da seta */
+//   }

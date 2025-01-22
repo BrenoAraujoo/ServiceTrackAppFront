@@ -4,6 +4,10 @@
 @import "primeng/resources/primeng.min.css";
 @import "primeicons/primeicons.css";
 @import "primeflex/primeflex.css";
+
+@import 'tippy.js/dist/tippy.css'; 
+@import 'tippy.js/themes/light.css'; // Tema do tippy
+
 html,
 body {
   height: 100%;

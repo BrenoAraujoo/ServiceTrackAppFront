@@ -54,7 +54,7 @@ export class LoginComponent  implements OnInit{
           if (response.isSuccess && response.data?.accessToken) {
             this._toastService.showSuccess('Sucesso', 'Acesso autorizado')
             this._authService.storeToken(response.data?.accessToken, response.data?.refreshToken)
-            this._router.navigate(['/users'])
+            this._router.navigate(['/calendar'])
           }
         },
         error: (err) => {
