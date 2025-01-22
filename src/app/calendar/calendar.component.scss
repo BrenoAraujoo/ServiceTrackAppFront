@@ -43,6 +43,12 @@
     color: var(--primary-color);
 }
 
+/* Alterar a cor de fundo do dia atual */
+::ng-deep .fc .fc-day-today {
+    background-color: var(--gray-200) !important; /* Cor de fundo personalizada */
+    color: var(--white) !important; /* Cor do texto personalizada */
+}
+  
 /* Container do título do evento */
 ::ng-deep .fc-event-title-container {
     color: var(--primary-color);

@@ -19,11 +19,13 @@ export class CalendarComponent implements OnInit {
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     dayMaxEvents:5,
+    height: 'auto', //  Ajusta o tamanho máximo do container de eventos
     locale: 'pt-br',
     themeSystem: 'custom',
     plugins: [dayGridPlugin, interactionPlugin],
     dateClick: (arg) => this.handleDateClick(arg),
     eventMouseEnter: (arg) => this.eventMouseEnter(arg),
+    eventDisplay:'list-item', // Exibe o evento com um ponto
     eventClick: this.handleEventClick.bind(this), 
     eventDrop: this.handleEventDrop.bind(this),
     moreLinkContent: 'Ver mais',
@@ -40,11 +42,17 @@ export class CalendarComponent implements OnInit {
       week: 'Semana',
       day: 'Dia'
     },
+    eventHint:'sim',
     editable: true,
     droppable: true,
     events: [
-      { title: 'event 1', date: '2025-01-01' },
-      { title: 'event 1', date: '2025-01-01' }
+      { title: 'event 1', date: '2025-01-21' },
+      { title: 'event 1', date: '2025-01-21' },
+      { title: 'event 1', date: '2025-01-21' },
+      { title: 'event 1', date: '2025-01-21' },
+      { title: 'event 1', date: '2025-01-21' },
+      { title: 'event 1', date: '2025-01-21' },
+      { title: 'event 1', date: '2025-01-21' },
     ]
   };
 
@@ -54,7 +62,8 @@ export class CalendarComponent implements OnInit {
   ngOnInit() {
   }
 
-  handleDateClick(arg: DateClickArg) {
+  handleDateClick(arg: DateClickArg) {   
+    alert('criar novo evento?')
     console.log('date click! ' + arg.dateStr)
   }
   eventMouseEnter(arg: EventHoveringArg) {

@@ -16,8 +16,8 @@ export class AuthInterceptor implements HttpInterceptor {
         const authToken = this._authService.getToken();
         this._loadingService.show();
 
-        // If the token is not empty, clone the request and replace the original headers with
-        // cloned headers, updated with the authorization. 
+
+        //Se o token não for vazio, clona a requisição e adiciona no header o 'Authorization - Bearer'.
         var authReq = req.clone();
         if (authToken) {
             authReq = req.clone({
@@ -26,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
         }
         return next.handle(authReq)
             .pipe(
-                finalize(() => this._loadingService.hide()) // Hides the spinner component
+                finalize(() => this._loadingService.hide()) // Esconde o componente spinner
             );
 
     }
