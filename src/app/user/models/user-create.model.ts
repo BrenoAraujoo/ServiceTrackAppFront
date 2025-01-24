@@ -4,6 +4,6 @@ export interface UserCreateModel{
     email: string; 
     smartPhoneNumber: string;
     jobPosition: string | null; 
-    userRole: string;
+    role: string;
 
 }

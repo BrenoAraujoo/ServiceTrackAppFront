@@ -3,6 +3,6 @@ export interface UserUpdateModel {
     email: string | null;
     smartPhoneNumber: string | null;
     jobPosition: string | null;
-    userRole: string | null;
+    role: string | null;
 
 }

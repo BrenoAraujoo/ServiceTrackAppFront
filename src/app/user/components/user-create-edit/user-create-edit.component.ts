@@ -58,7 +58,7 @@ export class UserCreateComponent implements OnInit, OnDestroy {
       smartPhoneNumber: [''],
       password: ['', Validators.required],
       passwordConfirm: ['', Validators.required],
-      userRole: ['', Validators.required]
+      role: ['', Validators.required]
     }, { validators: passwordMatchValidator() })
 
     //Seta o userForm para que os componentes 'tabs' possam acessar esse form
@@ -77,13 +77,13 @@ export class UserCreateComponent implements OnInit, OnDestroy {
               if (!isSuccess && error) {
                 this.toastService.showErro('Erro ao encontrar o usuário', error?.message);
               }
-              const { name, email, jobPosition, smartPhoneNumber, userRole } = data!;
+              const { name, email, jobPosition, smartPhoneNumber, role } = data!;
               this.userForm.patchValue({
                 name,
                 email,
                 jobPosition,
                 smartPhoneNumber,
-                userRole
+                role
               })
             },
             error: (err: HttpErrorResponse) => {
@@ -132,14 +132,14 @@ export class UserCreateComponent implements OnInit, OnDestroy {
     // Remove os validadores dos campos específicos
     this.userForm.get('name')?.clearValidators();
     this.userForm.get('email')?.clearValidators();
-    this.userForm.get('userRole')?.clearValidators();
+    this.userForm.get('role')?.clearValidators();
 
     // Atualiza a validade e os valores dos campos após remover os validadores
     this.userForm.get('name')?.updateValueAndValidity();
     this.userForm.get('email')?.updateValueAndValidity();
     this.userForm.get('password')?.updateValueAndValidity();
     this.userForm.get('passwordConfirm')?.updateValueAndValidity();
-    this.userForm.get('userRole')?.updateValueAndValidity();
+    this.userForm.get('role')?.updateValueAndValidity();
 
     if (!this.userForm.valid) {
       this.toastService.showWarning('Atualização de usuário', 'Dados inválidos')

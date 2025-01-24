@@ -6,7 +6,7 @@ export interface  User{
     smartPhoneNumber: string;
     jobPosition: string | null; 
     active: boolean;
-    userRole: string
+    role: string
 
 
 }

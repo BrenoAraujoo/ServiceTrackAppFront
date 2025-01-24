@@ -21,7 +21,6 @@ export class UserTabDetailsComponent implements OnInit {
   ngOnInit() {
    this.userForm = this.userFormService.getUserForm();
 
-   //this.userTypes = ['Usuário','Gestor','Administrador']
 
    this.userTypes = [
     { label: 'Administrador', value: 'Admin' },
